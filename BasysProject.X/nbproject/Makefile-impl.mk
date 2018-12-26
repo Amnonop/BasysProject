@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=SSDDemo.X
+PROJECTNAME=BasysProject.X
 
 # Active Configuration
 DEFAULTCONF=default
