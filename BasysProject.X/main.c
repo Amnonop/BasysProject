@@ -89,12 +89,13 @@ void startSimulator()
 {
     unsigned int wCnt = 0, baseCnt = 0;
     LCD_Init(); 
-    SSD_Init();
+    //SSD_Init();
     BTN_Init();
     LCD_WriteStringAtPos("SSD Demo", 0, 0);
     LCD_WriteStringAtPos("Katya", 1, 0);
     
-    runSimulator();
+    initSimulator();
+    SSD_Init();
 
 // OPTION 1: POLLING    
 // ORIGINAL CODE from SSDDemo Project

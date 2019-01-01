@@ -29,7 +29,7 @@
 #include <sys/attribs.h>
 #include "config.h"
 #include "ssd.h"
-
+#include "simulator.h"
 /* ************************************************************************** */
 
 // the array that contains the LEDs configuration for each value to be displayed
@@ -88,6 +88,7 @@ void __ISR(_TIMER_1_VECTOR, ipl7) Timer1ISR(void)
     {
         //display the counter values on the 4 digits available
         SSD_WriteDigitsGrouped(wCnt++, 0);
+        execute();
         baseCnt = 0;        
     }
     

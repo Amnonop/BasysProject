@@ -575,24 +575,29 @@ void display(int instruction, int pc)
 ** Parameters:
 **		commandLineArgs - an array containing the command line arguments passed
 */
+int registers[NUM_OF_REGISTERS];
+int memory[MEMORY_SIZE];
+ExecutionState executionState;
+Instruction decodedInstruction;
+int instructionCounter;
+
 void runSimulator()
 {
-	int registers[NUM_OF_REGISTERS];
+	
     int i;
 	for (i = 0; i < NUM_OF_REGISTERS; i++)
 	{
 		registers[i] = 0;
 	}
 
-	int memory[MEMORY_SIZE];
 	loadFibonachi(memory);
 
-	ExecutionState executionState;
+	
 	executionState.pc = 0;
 	executionState.isHaltExecuted = 0;
 
 	int instructionCounter = 0;
-	Instruction decodedInstruction;
+	
     
     LCD_Init();
 	while (!executionState.isHaltExecuted)
@@ -602,4 +607,34 @@ void runSimulator()
 		executeInstruction(&decodedInstruction, memory, registers, &executionState);
 		instructionCounter++;
 	}
+}
+
+void initSimulator()
+{
+    int i;
+	for (i = 0; i < NUM_OF_REGISTERS; i++)
+	{
+		registers[i] = 0;
+	}
+
+	loadFibonachi(memory);
+
+	
+	executionState.pc = 0;
+	executionState.isHaltExecuted = 0;
+
+	instructionCounter = 0;
+    
+    LCD_Init();
+}
+
+void execute()
+{
+    if (!executionState.isHaltExecuted) 
+    {
+        display(memory[executionState.pc], executionState.pc);
+        decodeInstruction(memory[executionState.pc], &decodedInstruction);
+        executeInstruction(&decodedInstruction, memory, registers, &executionState);
+        instructionCounter++;
+    }
 }
