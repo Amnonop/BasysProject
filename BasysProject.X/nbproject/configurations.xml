@@ -59,8 +59,6 @@
       <compileType>
         <linkerTool>
           <linkerLibItems>
-            <linkerLibFileItem>../../../project_2/Basys-MX3-library/LibPack/LibPack.X/led.c</linkerLibFileItem>
-            <linkerLibFileItem>../../../project_2/Basys-MX3-library/LibPack/LibPack.X/led.h</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
         <archiverTool>
