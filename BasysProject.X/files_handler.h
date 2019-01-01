@@ -3,12 +3,4 @@
 //
 //void loadMemory(char* inputMemoryFilename, int memory[]);
 //
-//void writeTrace(char* traceFilename, int pc, int instruction, int registers[]);
-//
-//void writeMemoryToFile(char* memoutFilename, int memorySize, int memory[]);
-//
-//void writeRegistersToFile(char* registersFilename, int numberOfRegisters, int registers[]);
-//
-//void writeCountToFile(char* countFilename, int instructionCount);
-//
 //#endif

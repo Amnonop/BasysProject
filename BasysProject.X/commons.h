@@ -6,7 +6,7 @@
 
 #define NUM_OF_REGISTERS 16
 #define HEX_WORD_LENGTH 8
-#define MEMORY_SIZE 4096
+#define MEMORY_SIZE 512
 
 /*
 ** Summary:

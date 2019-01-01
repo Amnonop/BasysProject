@@ -1,7 +1,7 @@
 //#include <stdio.h>
 //#include "commons.h"
 //#include "command_line_arguments.h"
-//#include "simulator.h"
+#include "simulator.h"
 //
 ///*
 //** Summary: 
@@ -64,11 +64,11 @@
 #pragma config FPLLMUL =	MUL_20
 #pragma config FPLLODIV =	DIV_1
 
-void SSDDemo();
+void startSimulator();
 
-int main(int argc, char** argv) 
+int main() 
 {
-    SSDDemo();   
+    startSimulator();   
     return (1);
 }
 
@@ -85,7 +85,7 @@ int main(int argc, char** argv)
 **      The 4 digits display a counter values and the BTNC button resets the counter
 **          
 */
-void SSDDemo()
+void startSimulator()
 {
     unsigned int wCnt = 0, baseCnt = 0;
     LCD_Init(); 
@@ -93,25 +93,27 @@ void SSDDemo()
     BTN_Init();
     LCD_WriteStringAtPos("SSD Demo", 0, 0);
     LCD_WriteStringAtPos("Katya", 1, 0);
+    
+    runSimulator();
 
 // OPTION 1: POLLING    
 // ORIGINAL CODE from SSDDemo Project
 // The following loop demonstrates POLLING:
     
 /*starts here*/
-    while(1)
-    {
-       if(++baseCnt == 1000000)
-        {
-            //display the counter values on the 4 digits available
-            SSD_WriteDigitsGrouped(wCnt++, 0);
-            baseCnt = 0;        
-            //if button C is pressed, reset the counter
-            if (BTN_GetValue(2))
-            {
-                wCnt=0;
-            }
-        }
-    }
+//    while(1)
+//    {
+//       if(++baseCnt == 1000000)
+//        {
+//            //display the counter values on the 4 digits available
+//            SSD_WriteDigitsGrouped(wCnt++, 0);
+//            baseCnt = 0;        
+//            //if button C is pressed, reset the counter
+//            if (BTN_GetValue(2))
+//            {
+//                wCnt=0;
+//            }
+//        }
+//    }
 /*ends here*/    
 }

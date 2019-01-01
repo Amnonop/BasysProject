@@ -10,9 +10,9 @@
       <itemPath>lcd.h</itemPath>
       <itemPath>btn.h</itemPath>
       <itemPath>command_line_arguments.h</itemPath>
-      <itemPath>files_handler.h</itemPath>
       <itemPath>instruction_executer.h</itemPath>
       <itemPath>simulator.h</itemPath>
+      <itemPath>commons.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -27,7 +27,6 @@
       <itemPath>utils.c</itemPath>
       <itemPath>lcd.c</itemPath>
       <itemPath>command_line_arguments.c</itemPath>
-      <itemPath>files_handler.c</itemPath>
       <itemPath>instruction_executer.c</itemPath>
       <itemPath>simulator.c</itemPath>
     </logicalFolder>
