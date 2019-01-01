@@ -1,8 +1,9 @@
 #include <stdio.h>
+#include <string.h>
 #include "commons.h"
 #include "instruction_executer.h"
 
-char fibonachiInputMemory[MEMORY_SIZE][HEX_WORD_LENGTH] = {"0D000200",
+char* fibonachiInputMemory[MEMORY_SIZE] = {"0D000200",
 "C3000100",
 "B0000005",
 "D2000101",
@@ -542,10 +543,14 @@ void loadFibonachi(int memory[])
 {
 	int instruction;
     int i;
+    char temp;
     
     instruction = 0;
-    for (i = 0; i < MEMORY_SIZE; i++) {
-        sscanf(fibonachiInputMemory[i], "%x", &instruction);
+    for (i = 0; i < MEMORY_SIZE; i++) 
+    {
+        temp = fibonachiInputMemory[i][0];
+        instruction = (unsigned int)strtol(fibonachiInputMemory[i], NULL, 16);
+        //sscanf(fibonachiInputMemory[i], "%08x", &instruction);
         memory[i] = instruction;
     }
 }

@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=main.c btn.c ssd.c utils.c lcd.c command_line_arguments.c instruction_executer.c simulator.c
+SOURCEFILES_QUOTED_IF_SPACED=main.c btn.c ssd.c utils.c lcd.c command_line_arguments.c files_handler.c instruction_executer.c simulator.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o ${OBJECTDIR}/btn.o ${OBJECTDIR}/ssd.o ${OBJECTDIR}/utils.o ${OBJECTDIR}/lcd.o ${OBJECTDIR}/command_line_arguments.o ${OBJECTDIR}/instruction_executer.o ${OBJECTDIR}/simulator.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d ${OBJECTDIR}/btn.o.d ${OBJECTDIR}/ssd.o.d ${OBJECTDIR}/utils.o.d ${OBJECTDIR}/lcd.o.d ${OBJECTDIR}/command_line_arguments.o.d ${OBJECTDIR}/instruction_executer.o.d ${OBJECTDIR}/simulator.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o ${OBJECTDIR}/btn.o ${OBJECTDIR}/ssd.o ${OBJECTDIR}/utils.o ${OBJECTDIR}/lcd.o ${OBJECTDIR}/command_line_arguments.o ${OBJECTDIR}/files_handler.o ${OBJECTDIR}/instruction_executer.o ${OBJECTDIR}/simulator.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d ${OBJECTDIR}/btn.o.d ${OBJECTDIR}/ssd.o.d ${OBJECTDIR}/utils.o.d ${OBJECTDIR}/lcd.o.d ${OBJECTDIR}/command_line_arguments.o.d ${OBJECTDIR}/files_handler.o.d ${OBJECTDIR}/instruction_executer.o.d ${OBJECTDIR}/simulator.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/main.o ${OBJECTDIR}/btn.o ${OBJECTDIR}/ssd.o ${OBJECTDIR}/utils.o ${OBJECTDIR}/lcd.o ${OBJECTDIR}/command_line_arguments.o ${OBJECTDIR}/instruction_executer.o ${OBJECTDIR}/simulator.o
+OBJECTFILES=${OBJECTDIR}/main.o ${OBJECTDIR}/btn.o ${OBJECTDIR}/ssd.o ${OBJECTDIR}/utils.o ${OBJECTDIR}/lcd.o ${OBJECTDIR}/command_line_arguments.o ${OBJECTDIR}/files_handler.o ${OBJECTDIR}/instruction_executer.o ${OBJECTDIR}/simulator.o
 
 # Source Files
-SOURCEFILES=main.c btn.c ssd.c utils.c lcd.c command_line_arguments.c instruction_executer.c simulator.c
+SOURCEFILES=main.c btn.c ssd.c utils.c lcd.c command_line_arguments.c files_handler.c instruction_executer.c simulator.c
 
 
 CFLAGS=
@@ -142,6 +142,12 @@ ${OBJECTDIR}/command_line_arguments.o: command_line_arguments.c  nbproject/Makef
 	@${RM} ${OBJECTDIR}/command_line_arguments.o 
 	@${FIXDEPS} "${OBJECTDIR}/command_line_arguments.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/command_line_arguments.o.d" -o ${OBJECTDIR}/command_line_arguments.o command_line_arguments.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
 	
+${OBJECTDIR}/files_handler.o: files_handler.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/files_handler.o.d 
+	@${RM} ${OBJECTDIR}/files_handler.o 
+	@${FIXDEPS} "${OBJECTDIR}/files_handler.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/files_handler.o.d" -o ${OBJECTDIR}/files_handler.o files_handler.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
+	
 ${OBJECTDIR}/instruction_executer.o: instruction_executer.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/instruction_executer.o.d 
@@ -190,6 +196,12 @@ ${OBJECTDIR}/command_line_arguments.o: command_line_arguments.c  nbproject/Makef
 	@${RM} ${OBJECTDIR}/command_line_arguments.o.d 
 	@${RM} ${OBJECTDIR}/command_line_arguments.o 
 	@${FIXDEPS} "${OBJECTDIR}/command_line_arguments.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/command_line_arguments.o.d" -o ${OBJECTDIR}/command_line_arguments.o command_line_arguments.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/files_handler.o: files_handler.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/files_handler.o.d 
+	@${RM} ${OBJECTDIR}/files_handler.o 
+	@${FIXDEPS} "${OBJECTDIR}/files_handler.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/files_handler.o.d" -o ${OBJECTDIR}/files_handler.o files_handler.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
 	
 ${OBJECTDIR}/instruction_executer.o: instruction_executer.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
