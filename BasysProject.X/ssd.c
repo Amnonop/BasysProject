@@ -64,7 +64,7 @@ const unsigned char digitSegments[]= {
 #define NO_DIGITS sizeof(digitSegments)/sizeof(digitSegments[0])
 unsigned char digits[4];
 // The following defines the time between interrupts
-#define TMR_TIME    0.002 // 2000 us for each tick (interrupt every 2ms)
+#define TMR_TIME    0.03120 // 31.25 msec for each tick (interrupt every 31.20ms)
 
 /***	Timer1ISR
 **
@@ -84,11 +84,11 @@ void __ISR(_TIMER_1_VECTOR, ipl7) Timer1ISR(void)
     // that is implemented via INTERRUPT
     
     /*starts here*/
-    if(baseCnt++ == 500)
+    execute();
+    if(baseCnt++ == 32)
     {
         //display the counter values on the 4 digits available
         SSD_WriteDigitsGrouped(wCnt++, 0);
-        execute();
         baseCnt = 0;        
     }
     
