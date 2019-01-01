@@ -2,6 +2,7 @@
 #include <string.h>
 #include "commons.h"
 #include "instruction_executer.h"
+#include "lcd.h"
 
 char* fibonachiInputMemory[MEMORY_SIZE] = {"0D000200",
 "C3000100",
@@ -549,7 +550,7 @@ void loadFibonachi(int memory[])
     for (i = 0; i < MEMORY_SIZE; i++) 
     {
         temp = fibonachiInputMemory[i][0];
-        instruction = (unsigned int)strtol(fibonachiInputMemory[i], NULL, 16);
+        instruction = (long)strtoul(fibonachiInputMemory[i], NULL, 16);
         //sscanf(fibonachiInputMemory[i], "%08x", &instruction);
         memory[i] = instruction;
     }
@@ -560,7 +561,6 @@ void display(int instruction, int pc)
     char instructionString[HEX_WORD_LENGTH + 1];
     char pcString[4];
     
-    LCD_Init(); 
     sprintf(instructionString, "%08X", instruction);
     LCD_WriteStringAtPos(instructionString, 0, 0);
     sprintf(pcString, "%03X", pc);
@@ -593,6 +593,8 @@ void runSimulator()
 
 	int instructionCounter = 0;
 	Instruction decodedInstruction;
+    
+    LCD_Init();
 	while (!executionState.isHaltExecuted)
 	{
         display(memory[executionState.pc], executionState.pc);

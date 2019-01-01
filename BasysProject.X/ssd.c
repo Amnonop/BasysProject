@@ -84,18 +84,18 @@ void __ISR(_TIMER_1_VECTOR, ipl7) Timer1ISR(void)
     // that is implemented via INTERRUPT
     
     /*starts here*/
-//    if(baseCnt++ == 500)
-//    {
-//        //display the counter values on the 4 digits available
-//        SSD_WriteDigitsGrouped(wCnt++, 0);
-//        baseCnt = 0;        
-//    }
-//    
-//    //if button C is pressed, reset the counter
-//    if (BTN_GetValue(2))
-//    {
-//        wCnt=0;
-//    }
+    if(baseCnt++ == 500)
+    {
+        //display the counter values on the 4 digits available
+        SSD_WriteDigitsGrouped(wCnt++, 0);
+        baseCnt = 0;        
+    }
+    
+    //if button C is pressed, reset the counter
+    if (BTN_GetValue(2))
+    {
+        wCnt=0;
+    }
     /*ends here*/
     
     
