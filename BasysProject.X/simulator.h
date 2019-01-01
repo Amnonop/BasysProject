@@ -1,6 +1,9 @@
 #ifndef SIMULATOR_H
 #define SIMULATOR_H
 
-void runSimulator(char *commandLineArgs[]);
+void initSimulator();
+void runSimulator();
+
+void execute();
 
 #endif

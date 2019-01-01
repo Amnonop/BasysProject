@@ -29,7 +29,7 @@
 #include <sys/attribs.h>
 #include "config.h"
 #include "ssd.h"
-
+#include "simulator.h"
 /* ************************************************************************** */
 
 // the array that contains the LEDs configuration for each value to be displayed
@@ -64,7 +64,7 @@ const unsigned char digitSegments[]= {
 #define NO_DIGITS sizeof(digitSegments)/sizeof(digitSegments[0])
 unsigned char digits[4];
 // The following defines the time between interrupts
-#define TMR_TIME    0.002 // 2000 us for each tick (interrupt every 2ms)
+#define TMR_TIME    0.03120 // 31.25 msec for each tick (interrupt every 31.20ms)
 
 /***	Timer1ISR
 **
@@ -84,18 +84,19 @@ void __ISR(_TIMER_1_VECTOR, ipl7) Timer1ISR(void)
     // that is implemented via INTERRUPT
     
     /*starts here*/
-//    if(baseCnt++ == 500)
-//    {
-//        //display the counter values on the 4 digits available
-//        SSD_WriteDigitsGrouped(wCnt++, 0);
-//        baseCnt = 0;        
-//    }
-//    
-//    //if button C is pressed, reset the counter
-//    if (BTN_GetValue(2))
-//    {
-//        wCnt=0;
-//    }
+    execute();
+    if(baseCnt++ == 32)
+    {
+        //display the counter values on the 4 digits available
+        SSD_WriteDigitsGrouped(wCnt++, 0);
+        baseCnt = 0;        
+    }
+    
+    //if button C is pressed, reset the counter
+    if (BTN_GetValue(2))
+    {
+        wCnt=0;
+    }
     /*ends here*/
     
     
