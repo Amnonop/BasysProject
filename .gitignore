@@ -45,7 +45,7 @@ build/
 *.obj.dmp
 html/
 BasysProject.X/nbproject/private/
-nbproject/Package-*.bash
+BasysProject.X/nbproject/Package-*.bash
 build/
 nbbuild/
 dist/
