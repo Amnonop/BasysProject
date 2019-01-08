@@ -2,6 +2,8 @@
 //#include "commons.h"
 //#include "command_line_arguments.h"
 #include "simulator.h"
+#include "btn.h"
+#include "swt.h"
 //
 ///*
 //** Summary: 
@@ -85,6 +87,68 @@ int main()
 **      The 4 digits display a counter values and the BTNC button resets the counter
 **          
 */
+void lcdShowSelectedMemory()
+{
+    int RSP;
+    int sw5State = SWT_GetValue(0);
+    int sw6State = SWT_GetValue(1);
+    int switch56Case = swOState | (sw1State<<2);
+    switch(switch56Case)
+    {
+        case 0:
+        {
+            RSP = 0x000;
+            break;
+        }
+        case 1:
+        {
+            RSP = 0x100;
+            break;
+        }
+        case 2:
+        {
+            RSP = 0x1FF;
+            break;
+        }
+        case 3:
+        {
+            RSP = 0x1FF;
+            break;
+        }
+    }
+}
+
+void getLcdState()
+{
+    int swOState = SWT_GetValue(0);
+    int sw1State = SWT_GetValue(1);
+    int switch12Case = swOState | (sw1State<<2);
+    switch(switch12Case)
+    {
+        case 0:
+        {
+            lcdShowInstructionandPc();
+            break;
+        }
+        case 1:
+        {
+            lcdShowSelectedRegister();
+            break;
+        }
+        case 2:
+        {
+            lcdShowSelectedMemory();
+            break;
+        }
+        case 3:
+        {
+            lcdShowInstructionCounter();
+            break;
+        }
+    }
+    
+}
+
 void startSimulator()
 {
     unsigned int wCnt = 0, baseCnt = 0;
