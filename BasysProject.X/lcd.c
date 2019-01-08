@@ -531,7 +531,7 @@ void lcdShowInstructionandPc() //already implemented in "initSimulator"
 
 lcdShowSelectedRegister()
 {
-    long memoryValue = 0;
+    long registerValue = 0;
     char firstLcdLine = "R";
     char secondLcdLine = ""; // will print empty string
     char registerNumberString = "";
@@ -541,19 +541,12 @@ lcdShowSelectedRegister()
     if (registerNumber>0X1FF) registerNumber = 0X000;
     sprintf(registerNumberString, "%X", registerNumber);
     strcat(firstLcdLine, registerNumberString);
-    memoryValue = memory[registerNumber];
-    sprintf(registerValueString, "%X", memoryValue);
+    registerValue = registers[registerNumber];
+    sprintf(registerValueString, "%X", registerValue);
     strcat(firstLcdLine, " = ");
     strcat(firstLcdLine,registerValueString);
     LCD_WriteStringAtPos(firstLcdLine, 0, 0);
     LCD_WriteStringAtPos(secondLcdLine, 1, 0);
-}
-
-void lcdShowInstructionCounter()
-{
-     char instructionCounterString = "";
-     sprintf(instructionCounterString, "%X", instructionCounter);
-     LCD_WriteStringAtPos(instructionCounterString, 0, 0);
 }
 
 void lcdShowSelectedMemory()
@@ -562,6 +555,10 @@ void lcdShowSelectedMemory()
     char secondLcdLine = "RSP = ";
     char memoryAdressString = "";
     int memoryAdress = 0X000;
+    char memoryValueString = "";
+    int memoryValue = 0;
+    int registerSpValue = 0;
+    char registerSpString = "";
     int sw5State = SWT_GetValue(0);
     int sw6State = SWT_GetValue(1);
     int switch56Case = sw5State | (sw6State<<2); 
@@ -592,11 +589,22 @@ void lcdShowSelectedMemory()
         sprintf(memoryAdressString, "%X", memoryAdress);
 		strcat(firstLcdLine, memoryAdressString);
         strcat(firstLcdLine, " = ");
-        //strcat(firstLcdLine, memory[AAA]);
-        // strcat(secondLcdLine, $SP);
+        memoryValue = memory[memoryAdress];
+        sprintf(memoryValueString, "%X", memoryValue);
+        strcat(firstLcdLine, memoryValueString);
+        registerSpValue = registers[13];
+        sprintf(registerSpString, "%X", registerSpValue);
+        strcat(secondLcdLine, registerSpString);
         LCD_WriteStringAtPos(firstLcdLine, 0, 0);
         LCD_WriteStringAtPos(secondLcdLine, 1, 0);
     }
+}
+
+void lcdShowInstructionCounter()
+{
+     char instructionCounterString = "";
+     sprintf(instructionCounterString, "%X", instructionCounter);
+     LCD_WriteStringAtPos(instructionCounterString, 0, 0);
 }
 
 void getLcdState()
