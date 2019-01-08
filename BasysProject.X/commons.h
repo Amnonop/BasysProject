@@ -8,11 +8,21 @@
 #define HEX_WORD_LENGTH 8
 #define MEMORY_SIZE 512
 
-int registers[NUM_OF_REGISTERS];
-int memory[MEMORY_SIZE];
-ExecutionState executionState;
-Instruction decodedInstruction;
-int instructionCounter;
+/*
+** Summary:
+**		Represents the execution state of the program.
+** Fields:
+**		pc - an integer representing the PC, which 
+**			points to the instruction to be executed.
+**		isHaltExecuted - true if the HALT command 
+**			has been executed, false otherwise
+*/
+struct executionState {
+	int pc;
+	int isHaltExecuted;
+};
+typedef struct executionState ExecutionState;
+
 
 /*
 ** Summary:
@@ -28,5 +38,11 @@ struct instruction
 	int imm;
 };
 typedef struct instruction Instruction;
+
+int registers[NUM_OF_REGISTERS];
+int memory[MEMORY_SIZE];
+ExecutionState executionState;
+Instruction decodedInstruction;
+int instructionCounter;
 
 #endif
