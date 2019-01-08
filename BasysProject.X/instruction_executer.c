@@ -1,5 +1,6 @@
 #include "commons.h"
 #include "instruction_executer.h"
+#include "io_registers_handler.h"
 
 enum Opcodes
 {
@@ -87,6 +88,25 @@ void branch(Instruction* instruction, int registers[], ExecutionState* state)
 	}
 }
 
+void in(Instruction* instruction)
+{
+    if (!isReadOnlyRegister(instruction->rd))
+    {
+        int ioRegisterIndex;
+        ioRegisterIndex = registers[instruction->rs] + signExtend(instruction->imm);
+        registers[instruction->rd] = IORegisters[ioRegisterIndex];
+    }
+}
+
+void out(Instruction* instruction)
+{
+    int writeIndex = registers[instruction->rs] + signExtend(instruction->imm);
+    if (!isReadOnlyRegister(writeIndex)) 
+    {
+        IORegisters[writeIndex] = registers[instruction->rd];
+    }
+}
+
 void jumpAndLink(Instruction* instruction, int registers[], ExecutionState* state)
 {
 	registers[15] = (state->pc + 1) & 0xfff;
@@ -149,6 +169,12 @@ void executeInstruction(Instruction* instruction, int memory[], int registers[],
 		case Branch:
 			branch(instruction, registers, state);
 			break;
+        case In:
+            In(instruction);
+            break;
+        case Out:
+            Out(instruction);
+            break;
 		case Jal:
 			jumpAndLink(instruction, registers, state);
 			break;
