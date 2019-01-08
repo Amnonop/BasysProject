@@ -2,6 +2,7 @@
 //#include "commons.h"
 //#include "command_line_arguments.h"
 #include "simulator.h"
+
 //
 ///*
 //** Summary: 
@@ -35,6 +36,7 @@
 #include "lcd.h"
 #include "ssd.h"
 #include "btn.h"
+#include "swt.h"
 
 
 #pragma config JTAGEN = OFF     
@@ -85,6 +87,7 @@ int main()
 **      The 4 digits display a counter values and the BTNC button resets the counter
 **          
 */
+
 void startSimulator()
 {
     unsigned int wCnt = 0, baseCnt = 0;

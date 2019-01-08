@@ -29,6 +29,16 @@
 #include <string.h>
 #include "config.h"
 #include "lcd.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <xc.h>
+#include <sys/attribs.h>
+#include "config.h"
+
+#include "lcd.h"
+#include "ssd.h"
+#include "btn.h"
+#include "swt.h"
 /* ************************************************************************** */
 
 /* ------------------------------------------------------------ */
@@ -514,7 +524,115 @@ void LCD_WriteBytesAtPosCgram(unsigned char *pBytes, unsigned char len, unsigned
 	}
 }
 
-/* *****************************************************************************
- End of File
- */
+//****************new functions******************//
+
+void lcdShowInstructionandPc() //already implemented in "initSimulator"
+{
+    
+}
+
+lcdShowSelectedRegister()
+{
+    
+    char firstLcdLine = "R";
+    char secondLcdLine = ""; // will print empty string
+    char registerNumberString = "";
+    int registerNumber = 0X000;
+    if(BTN_GetValue(0)) registerNumber++; //BTNU PUSH
+    if (registerNumber>0X1FF) registerNumber = 0X000;
+    sprintf(registerNumberString, "%X", registerNumber);
+    strcat(firstLcdLine, registerNumberString);
+    strcat(firstLcdLine, " = ");
+    //strcat(firstLcdLine, register[XX]);
+    LCD_WriteStringAtPos(firstLcdLine, 0, 0);
+    LCD_WriteStringAtPos(secondLcdLine, 1, 0);
+
+}
+
+void lcdShowInstructionCounter()
+{
+     char firstLcdLine = "";
+     //strcat(firstLcdLine, numberOfInstructions);
+     LCD_WriteStringAtPos(firstLcdLine, 0, 0);
+     
+}
+
+void lcdShowSelectedMemory()
+{
+    char firstLcdLine = "M";
+    char secondLcdLine = "RSP = ";
+    char memoryAdressString = "";
+    int memoryAdress = 0X000;
+    int sw5State = SWT_GetValue(0);
+    int sw6State = SWT_GetValue(1);
+    int switch56Case = sw5State | (sw6State<<2); 
+    switch(switch56Case)
+    {
+        case 0:
+        {
+            memoryAdress = 0x000;
+            break;
+        }
+        case 1:
+        {
+            memoryAdress = 0x100;
+            break;
+        }
+        case 2:
+        {
+            memoryAdress = 0x1FF;
+            break;
+        }
+        case 3:
+        {
+            memoryAdress = 0x1FF;
+            break;
+        }
+        if(BTN_GetValue(0)) memoryAdress++;
+        if (memoryAdress>0X1FF) memoryAdress = 0X000;
+        sprintf(memoryAdressString, "%X", memoryAdress);
+		strcat(firstLcdLine, memoryAdressString);
+        strcat(firstLcdLine, " = ");
+        //strcat(firstLcdLine, memory[AAA]);
+        // strcat(secondLcdLine, $SP);
+        LCD_WriteStringAtPos(firstLcdLine, 0, 0);
+        LCD_WriteStringAtPos(secondLcdLine, 1, 0);
+    }
+}
+
+void getLcdState()
+{
+    // **should be checked frequently**//
+    int swOState = SWT_GetValue(0);
+    int sw1State = SWT_GetValue(1);
+    int switch12Case = swOState | (sw1State<<2);
+    switch(switch12Case)
+    {
+        case 0:
+        {
+            lcdShowInstructionandPc(); //already implemented in "initSimulator"
+            break;
+        }
+        case 1:
+        {
+            lcdShowSelectedRegister();
+            break;
+        }
+        case 2:
+        {
+            lcdShowSelectedMemory(); //waiting for MEMROY[AAA] and to $SP
+            break;
+        }
+        case 3:
+        {
+            lcdShowInstructionCounter();
+            break;
+        }
+    }
+    
+}
+
+//* *****************************************************************************//
+ //End of File
+ //*/
 
