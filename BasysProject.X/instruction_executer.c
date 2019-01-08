@@ -11,6 +11,8 @@ enum Opcodes
 	Sra = 5,
 	Mac = 6,
 	Branch = 7,
+    In = 8,
+    Out = 9,
 	Jal = 11,
 	Lw = 12,
 	Sw = 13,
