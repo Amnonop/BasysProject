@@ -575,11 +575,6 @@ void display(int instruction, int pc)
 ** Parameters:
 **		commandLineArgs - an array containing the command line arguments passed
 */
-int registers[NUM_OF_REGISTERS];
-int memory[MEMORY_SIZE];
-ExecutionState executionState;
-Instruction decodedInstruction;
-int instructionCounter;
 
 void runSimulator()
 {
