@@ -92,7 +92,7 @@ void lcdShowSelectedMemory()
     int RSP;
     int sw5State = SWT_GetValue(0);
     int sw6State = SWT_GetValue(1);
-    int switch56Case = swOState | (sw1State<<2);
+    int switch56Case = sw5State | (sw6State<<2); 
     switch(switch56Case)
     {
         case 0:
@@ -145,6 +145,7 @@ void getLcdState()
             lcdShowInstructionCounter();
             break;
         }
+        LCD_WriteStringAtPos("Katya", 1, 0);
     }
     
 }
