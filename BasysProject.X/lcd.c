@@ -542,12 +542,11 @@ lcdShowSelectedRegister()
     sprintf(registerNumberString, "%X", registerNumber);
     strcat(firstLcdLine, registerNumberString);
     memoryValue = memory[registerNumber];
-    sprintf(registerValueString, %0X, memoryValue )
+    sprintf(registerValueString, "%X", memoryValue);
     strcat(firstLcdLine, " = ");
-    strcat(firstLcdLine,);
+    strcat(firstLcdLine,registerValueString);
     LCD_WriteStringAtPos(firstLcdLine, 0, 0);
     LCD_WriteStringAtPos(secondLcdLine, 1, 0);
-
 }
 
 void lcdShowInstructionCounter()
