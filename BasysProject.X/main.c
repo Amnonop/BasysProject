@@ -87,9 +87,44 @@ int main()
 **      The 4 digits display a counter values and the BTNC button resets the counter
 **          
 */
+
+void lcdShowInstructionandPc() //already implemented in "initSimulator"
+{
+    
+}
+
+lcdShowSelectedRegister()
+{
+    
+    char firstLcdLine = "R";
+    char secondLcdLine = ""; // will print empty string
+    char XXString = "";
+    int XX = 0X000;
+    if(BTN_GetValue(0)) XX++;
+    if (XX>0X1FF) XX = 0X000;
+    sprintf(XXString, "%X", XX);
+    strcat(firstLcdLine, XXString);
+    strcat(firstLcdLine, " = ");
+    //strcat(firstLcdLine, register[XX]);
+    LCD_WriteStringAtPos(firstLcdLine, 0, 0);
+    LCD_WriteStringAtPos(secondLcdLine, 1, 0);
+
+}
+
+void lcdShowInstructionCounter()
+{
+     char firstLcdLine = "";
+     //strcat(firstLcdLine, numberOfInstructions);
+     LCD_WriteStringAtPos(firstLcdLine, 0, 0);
+     
+}
+
 void lcdShowSelectedMemory()
 {
-    int RSP = 0;
+    char firstLcdLine = "M";
+    char secondLcdLine = "RSP = ";
+    char AAAString = "";
+    int AAA = 0X000;
     int sw5State = SWT_GetValue(0);
     int sw6State = SWT_GetValue(1);
     int switch56Case = sw5State | (sw6State<<2); 
@@ -97,31 +132,39 @@ void lcdShowSelectedMemory()
     {
         case 0:
         {
-            RSP = 0x000;
+            AAA = 0x000;
             break;
         }
         case 1:
         {
-            RSP = 0x100;
+            AAA = 0x100;
             break;
         }
         case 2:
         {
-            RSP = 0x1FF;
+            AAA = 0x1FF;
             break;
         }
         case 3:
         {
-            RSP = 0x1FF;
+            AAA = 0x1FF;
             break;
         }
-        if(BTN_GetValue(0)) RSP++;
-        LCD_WriteStringAtPos(" RSP = ",%0XRSP," ", 1, 0);
+        if(BTN_GetValue(0)) AAA++;
+        if (AAA>0X1FF) AAA = 0X000;
+        sprintf(AAAString, "%X", AAA);
+		strcat(firstLcdLine, AAAString);
+        strcat(firstLcdLine, " = ");
+        //strcat(firstLcdLine, memory[AAA]);
+        // strcat(secondLcdLine, $SP);
+        LCD_WriteStringAtPos(firstLcdLine, 0, 0);
+        LCD_WriteStringAtPos(secondLcdLine, 1, 0);
     }
 }
 
 void getLcdState()
 {
+    // **should be checked frequently**//
     int swOState = SWT_GetValue(0);
     int sw1State = SWT_GetValue(1);
     int switch12Case = swOState | (sw1State<<2);
@@ -129,7 +172,7 @@ void getLcdState()
     {
         case 0:
         {
-            lcdShowInstructionandPc();
+            lcdShowInstructionandPc(); //already implemented in "initSimulator"
             break;
         }
         case 1:
@@ -139,7 +182,7 @@ void getLcdState()
         }
         case 2:
         {
-            lcdShowSelectedMemory();
+            lcdShowSelectedMemory(); //waiting for MEMROY[AAA] and to $SP
             break;
         }
         case 3:
