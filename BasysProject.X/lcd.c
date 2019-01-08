@@ -31,14 +31,12 @@
 #include "lcd.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <xc.h>
-#include <sys/attribs.h>
-#include "config.h"
 
 #include "lcd.h"
 #include "ssd.h"
 #include "btn.h"
 #include "swt.h"
+#include "commons.h"
 /* ************************************************************************** */
 
 /* ------------------------------------------------------------ */
@@ -533,17 +531,20 @@ void lcdShowInstructionandPc() //already implemented in "initSimulator"
 
 lcdShowSelectedRegister()
 {
-    
+    long memoryValue = 0;
     char firstLcdLine = "R";
     char secondLcdLine = ""; // will print empty string
     char registerNumberString = "";
+    char registerValueString = "";
     int registerNumber = 0X000;
     if(BTN_GetValue(0)) registerNumber++; //BTNU PUSH
     if (registerNumber>0X1FF) registerNumber = 0X000;
     sprintf(registerNumberString, "%X", registerNumber);
     strcat(firstLcdLine, registerNumberString);
+    memoryValue = memory[registerNumber];
+    sprintf(registerValueString, %0X, memoryValue )
     strcat(firstLcdLine, " = ");
-    //strcat(firstLcdLine, register[XX]);
+    strcat(firstLcdLine,);
     LCD_WriteStringAtPos(firstLcdLine, 0, 0);
     LCD_WriteStringAtPos(secondLcdLine, 1, 0);
 
@@ -551,10 +552,9 @@ lcdShowSelectedRegister()
 
 void lcdShowInstructionCounter()
 {
-     char firstLcdLine = "";
-     //strcat(firstLcdLine, numberOfInstructions);
-     LCD_WriteStringAtPos(firstLcdLine, 0, 0);
-     
+     char instructionCounterString = "";
+     sprintf(instructionCounterString, "%X", instructionCounter);
+     LCD_WriteStringAtPos(instructionCounterString, 0, 0);
 }
 
 void lcdShowSelectedMemory()
