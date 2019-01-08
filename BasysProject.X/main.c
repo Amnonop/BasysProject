@@ -2,8 +2,7 @@
 //#include "commons.h"
 //#include "command_line_arguments.h"
 #include "simulator.h"
-#include "btn.h"
-#include "swt.h"
+
 //
 ///*
 //** Summary: 
@@ -37,6 +36,7 @@
 #include "lcd.h"
 #include "ssd.h"
 #include "btn.h"
+#include "swt.h"
 
 
 #pragma config JTAGEN = OFF     
@@ -89,7 +89,7 @@ int main()
 */
 void lcdShowSelectedMemory()
 {
-    int RSP;
+    int RSP = 0;
     int sw5State = SWT_GetValue(0);
     int sw6State = SWT_GetValue(1);
     int switch56Case = sw5State | (sw6State<<2); 
@@ -115,6 +115,8 @@ void lcdShowSelectedMemory()
             RSP = 0x1FF;
             break;
         }
+        if(BTN_GetValue(0)) RSP++;
+        LCD_WriteStringAtPos(" RSP = ",%0XRSP," ", 1, 0);
     }
 }
 
@@ -145,7 +147,6 @@ void getLcdState()
             lcdShowInstructionCounter();
             break;
         }
-        LCD_WriteStringAtPos("Katya", 1, 0);
     }
     
 }
