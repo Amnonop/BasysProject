@@ -536,12 +536,12 @@ lcdShowSelectedRegister()
     
     char firstLcdLine = "R";
     char secondLcdLine = ""; // will print empty string
-    char XXString = "";
-    int XX = 0X000;
-    if(BTN_GetValue(0)) XX++;
-    if (XX>0X1FF) XX = 0X000;
-    sprintf(XXString, "%X", XX);
-    strcat(firstLcdLine, XXString);
+    char registerNumberString = "";
+    int registerNumber = 0X000;
+    if(BTN_GetValue(0)) registerNumber++; //BTNU PUSH
+    if (registerNumber>0X1FF) registerNumber = 0X000;
+    sprintf(registerNumberString, "%X", registerNumber);
+    strcat(firstLcdLine, registerNumberString);
     strcat(firstLcdLine, " = ");
     //strcat(firstLcdLine, register[XX]);
     LCD_WriteStringAtPos(firstLcdLine, 0, 0);
@@ -561,8 +561,8 @@ void lcdShowSelectedMemory()
 {
     char firstLcdLine = "M";
     char secondLcdLine = "RSP = ";
-    char AAAString = "";
-    int AAA = 0X000;
+    char memoryAdressString = "";
+    int memoryAdress = 0X000;
     int sw5State = SWT_GetValue(0);
     int sw6State = SWT_GetValue(1);
     int switch56Case = sw5State | (sw6State<<2); 
@@ -570,28 +570,28 @@ void lcdShowSelectedMemory()
     {
         case 0:
         {
-            AAA = 0x000;
+            memoryAdress = 0x000;
             break;
         }
         case 1:
         {
-            AAA = 0x100;
+            memoryAdress = 0x100;
             break;
         }
         case 2:
         {
-            AAA = 0x1FF;
+            memoryAdress = 0x1FF;
             break;
         }
         case 3:
         {
-            AAA = 0x1FF;
+            memoryAdress = 0x1FF;
             break;
         }
-        if(BTN_GetValue(0)) AAA++;
-        if (AAA>0X1FF) AAA = 0X000;
-        sprintf(AAAString, "%X", AAA);
-		strcat(firstLcdLine, AAAString);
+        if(BTN_GetValue(0)) memoryAdress++;
+        if (memoryAdress>0X1FF) memoryAdress = 0X000;
+        sprintf(memoryAdressString, "%X", memoryAdress);
+		strcat(firstLcdLine, memoryAdressString);
         strcat(firstLcdLine, " = ");
         //strcat(firstLcdLine, memory[AAA]);
         // strcat(secondLcdLine, $SP);
