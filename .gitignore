@@ -44,7 +44,7 @@ build/
 *.sdb
 *.obj.dmp
 html/
-nbproject/private/
+BasysProject.X/nbproject/private/
 nbproject/Package-*.bash
 build/
 nbbuild/
@@ -53,6 +53,6 @@ nbdist/
 nbactions.xml
 nb-configuration.xml
 funclist
-nbproject/Makefile-*
+BasysProject.X/nbproject/Makefile-*
 disassembly/
 *.map
