@@ -15,6 +15,7 @@
       <itemPath>simulator.h</itemPath>
       <itemPath>commons.h</itemPath>
       <itemPath>io_registers_handler.h</itemPath>
+      <itemPath>swt.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -33,6 +34,7 @@
       <itemPath>instruction_executer.c</itemPath>
       <itemPath>simulator.c</itemPath>
       <itemPath>io_registers_handler.c</itemPath>
+      <itemPath>swt.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -62,8 +64,6 @@
       <compileType>
         <linkerTool>
           <linkerLibItems>
-            <linkerLibFileItem>../../../project_2/Basys-MX3-library/LibPack/LibPack.X/led.c</linkerLibFileItem>
-            <linkerLibFileItem>../../../project_2/Basys-MX3-library/LibPack/LibPack.X/led.h</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
         <archiverTool>

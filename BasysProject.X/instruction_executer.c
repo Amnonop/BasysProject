@@ -170,10 +170,10 @@ void executeInstruction(Instruction* instruction, int memory[], int registers[],
 			branch(instruction, registers, state);
 			break;
         case In:
-            In(instruction);
+            in(instruction);
             break;
         case Out:
-            Out(instruction);
+            out(instruction);
             break;
 		case Jal:
 			jumpAndLink(instruction, registers, state);
