@@ -184,6 +184,7 @@ void BTN_refreshAll()
 {
     btnState.BTNU = BTN_checkIfPressed(0);
     btnState.BTNL = BTN_checkIfPressed(1);
+    btnState.BTNC = BTN_checkIfPressed(2);
     btnState.BTNR = BTN_checkIfPressed(3);
     btnState.BTND = BTN_checkIfPressed(4);
 }

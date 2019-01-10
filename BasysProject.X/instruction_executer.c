@@ -88,23 +88,19 @@ void branch(Instruction* instruction, int registers[], ExecutionState* state)
 	}
 }
 
-void in(Instruction* instruction)
+void in(Instruction* instruction, ExecutionState* state)
 {
-    if (!isReadOnlyRegister(instruction->rd))
-    {
-        int ioRegisterIndex;
-        ioRegisterIndex = registers[instruction->rs] + signExtend(instruction->imm);
-        registers[instruction->rd] = IORegisters[ioRegisterIndex];
-    }
+    int ioRegisterIndex;
+    ioRegisterIndex = registers[instruction->rs] + signExtend(instruction->imm);
+    registers[instruction->rd] = IORegisters[ioRegisterIndex];
+    state->pc++;
 }
 
-void out(Instruction* instruction)
+void out(Instruction* instruction, ExecutionState* state)
 {
     int writeIndex = registers[instruction->rs] + signExtend(instruction->imm);
-    if (!isReadOnlyRegister(writeIndex)) 
-    {
-        IORegisters[writeIndex] = registers[instruction->rd];
-    }
+    setIORegister(writeIndex, registers[instruction->rd]);
+    state->pc++;
 }
 
 void jumpAndLink(Instruction* instruction, int registers[], ExecutionState* state)
@@ -170,10 +166,10 @@ void executeInstruction(Instruction* instruction, int memory[], int registers[],
 			branch(instruction, registers, state);
 			break;
         case In:
-            in(instruction);
+            in(instruction, state);
             break;
         case Out:
-            out(instruction);
+            out(instruction, state);
             break;
 		case Jal:
 			jumpAndLink(instruction, registers, state);

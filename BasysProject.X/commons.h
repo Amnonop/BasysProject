@@ -17,12 +17,12 @@
 **		isHaltExecuted - true if the HALT command 
 **			has been executed, false otherwise
 */
-struct executionState {
+struct t_executionState {
     int isPause;
 	int pc;
 	int isHaltExecuted;
 };
-typedef struct executionState ExecutionState;
+typedef struct t_executionState ExecutionState;
 
 struct swtState {
     int SW0;
@@ -41,6 +41,7 @@ struct btnState {
 
     int BTNU;
     int BTND;
+    int BTNC;
     int BTNL;
     int BTNR;
 };
