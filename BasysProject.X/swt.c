@@ -75,9 +75,9 @@ void SWT_ConfigurePins()
     tris_SWT_SWT7 = 1;
 
     // disable analog (set pins as digital))
-    ansel_SWT_SWT5 = 0;
-    ansel_SWT_SWT6 = 0;
-    ansel_SWT_SWT7 = 0;    
+      ansel_SWT_SWT5 = 0;
+      ansel_SWT_SWT6 = 0;
+      ansel_SWT_SWT7 = 0;    
 }
 
 /***	SWT_GetValue
