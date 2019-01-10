@@ -1,5 +1,6 @@
 #include "io_registers_handler.h"
 #include "commons.h"
+#include "led.h"
 
 enum IORegisterIndex
 {
@@ -29,4 +30,27 @@ int updateCounterRegister()
     }
 }
 
+int setLedsRegister(int value)
+{
+    int writingMask = 0x000000FF;
+    IORegisters[LedsRegister] = value & writingMask;
+    
+    LED_SetGroupValue(IORegisters[LedsRegister]);
+}
+
+void setIORegister(int registerIndex, int value)
+{
+    if (!isReadOnlyRegister(registerIndex)) 
+    {
+        switch (registerIndex)
+        {
+            case LedsRegister:
+                setLedsRegister(value);
+                break;
+            default:
+                IORegisters[registerIndex] = value;
+                break;
+        }
+    }
+}
 
