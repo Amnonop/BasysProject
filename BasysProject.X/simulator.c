@@ -5,6 +5,8 @@
 #include "lcd.h"
 #include "swt.h"
 
+char* stopperInputMemory[MEMORY_SIZE] = {};
+
 char* fibonachiInputMemory[MEMORY_SIZE] = {"0D000200",
 "C3000100",
 "B0000005",
@@ -541,7 +543,7 @@ void decodeInstruction(int instructionToDecode, Instruction* decodedInstruction)
 	decodedInstruction->opcode = (instructionToDecode >> 28) & mask;
 }
 
-void loadFibonachi(int memory[])
+void loadFibonachi()
 {
 	int instruction;
     int i;
@@ -552,7 +554,21 @@ void loadFibonachi(int memory[])
     {
         temp = fibonachiInputMemory[i][0];
         instruction = (long)strtoul(fibonachiInputMemory[i], NULL, 16);
-        //sscanf(fibonachiInputMemory[i], "%08x", &instruction);
+        memory[i] = instruction;
+    }
+}
+
+void loadStopper()
+{
+    int instruction;
+    int i;
+    char temp;
+
+    instruction = 0;
+    for (i = 0; i < MEMORY_SIZE; i++) 
+    {
+        temp = stopperInputMemory[i][0];
+        instruction = (long) strtoul(stopperInputMemory[i], NULL, 16);
         memory[i] = instruction;
     }
 }
@@ -568,23 +584,33 @@ void display(int instruction, int pc)
     LCD_WriteStringAtPos(pcString, 1, 0);
 }
 
+void loadProgram()
+{
+    if (SWT_GetValue(7)) 
+    {
+        loadStopper();
+    }
+    else
+    {
+        loadFibonachi();
+    }
+}
+
 void initSimulator()
 {
+    LCD_WriteStringAtPos("Initializing simulator...", 0, 0);
     int i;
 	for (i = 0; i < NUM_OF_REGISTERS; i++)
 	{
 		registers[i] = 0;
 	}
 
-	loadFibonachi(memory);
-
+	loadProgram();
 	
 	executionState.pc = 0;
 	executionState.isHaltExecuted = 0;
 
 	instructionCounter = 0;
-    
-    LCD_Init();
 }
 
 void execute()
