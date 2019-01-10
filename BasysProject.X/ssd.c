@@ -30,6 +30,7 @@
 #include "config.h"
 #include "ssd.h"
 #include "simulator.h"
+#include "io_registers_handler.h"
 /* ************************************************************************** */
 
 // the array that contains the LEDs configuration for each value to be displayed
@@ -85,6 +86,7 @@ void __ISR(_TIMER_1_VECTOR, ipl7) Timer1ISR(void)
     
     /*starts here*/
     execute();
+    updateCounterRegister();
     if(baseCnt++ == 32)
     {
         //display the counter values on the 4 digits available
