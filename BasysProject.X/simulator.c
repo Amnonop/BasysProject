@@ -633,7 +633,7 @@ void execute()
     if (!executionState.isHaltExecuted) 
         
     {
-        executionState.isPause = (executionState.isPause || btnState.BTNL);  
+        executionState.isPause = (executionState.isPause ^ btnState.BTNL);  
         if(!executionState.isPause)       
         {
             decodeInstruction(memory[executionState.pc], &decodedInstruction);
