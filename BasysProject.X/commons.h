@@ -68,7 +68,9 @@ typedef struct instruction Instruction;
 int registers[NUM_OF_REGISTERS];
 int memory[MEMORY_SIZE];
 ExecutionState executionState;
+BtnState btnState;
 Instruction decodedInstruction;
 int instructionCounter;
+SwtState swtState;
 
 #endif
