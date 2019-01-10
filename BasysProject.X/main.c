@@ -92,6 +92,7 @@ void startSimulator()
 {
     unsigned int wCnt = 0, baseCnt = 0;
     LCD_Init(); 
+    SWT_Init();
     //SSD_Init();
     BTN_Init();
     LCD_WriteStringAtPos("SSD Demo", 0, 0);

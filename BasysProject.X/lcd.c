@@ -549,7 +549,7 @@ lcdShowSelectedRegister()
     char registerNumberString[] = "";
     char registerValueString[] = "";
     int registerNumber = 0X000;
-    if(BTN_GetValue(0)) registerNumber++; //BTNU PUSH
+    if(btnState.BTNU) registerNumber++; //BTNU PUSH
     if (registerNumber>0X1FF) registerNumber = 0X000;
     sprintf(registerNumberString, "%X", registerNumber);
     strcat(firstLcdLine, registerNumberString);
@@ -571,10 +571,10 @@ void lcdShowSelectedMemory()
     int memoryValue = 0;
     int registerSpValue = 0;
     char registerSpString[] = "";
-    int sw2State = swtState.SW2;
-    int sw3State = swtState.SW3;
-    int switch23Case = sw2State + (sw3State*2); 
-    switch(switch23Case)
+    int sw5State = swtState.SW5;
+    int sw6State = swtState.SW6;
+    int switch56Case = sw5State + (sw6State*2); 
+    switch(switch56Case)
     {
         case 0:
         {
@@ -597,7 +597,7 @@ void lcdShowSelectedMemory()
             break;
         }
     }
-    if(BTN_GetValue(0)) memoryAdress++;
+    if(btnState.BTNU) memoryAdress++;
     if (memoryAdress>0x1FF) memoryAdress = 0x000;
     sprintf(memoryAdressString, "%X", memoryAdress);
     strcat(firstLcdLine, memoryAdressString);
@@ -606,7 +606,7 @@ void lcdShowSelectedMemory()
     sprintf(memoryValueString, "%X", memoryValue);
     strcat(firstLcdLine, memoryValueString);
     registerSpValue = registers[13];
-    sprintf(registerSpString, "%X", registerSpValue);
+    sprintf(registerSpString, "%03X", registerSpValue);
     strcat(secondLcdLine, registerSpString);
     LCD_WriteStringAtPos(firstLcdLine, 0, 0);
     LCD_WriteStringAtPos(secondLcdLine, 1, 0);
