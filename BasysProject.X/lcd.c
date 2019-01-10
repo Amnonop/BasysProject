@@ -531,7 +531,7 @@ void clearLcdDisplay()
     LCD_WriteStringAtPos("                                      ", 1, 0);
 }
 
-void lcdShowInstructionandPc() //already implemented in "initSimulator"
+void lcdShowInstructionandPc() 
 {
     char instructionString[HEX_WORD_LENGTH + 1];
     char pcString[4];
