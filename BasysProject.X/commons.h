@@ -18,10 +18,36 @@
 **			has been executed, false otherwise
 */
 struct executionState {
+    int isPause;
 	int pc;
 	int isHaltExecuted;
 };
 typedef struct executionState ExecutionState;
+
+struct swtState {
+    int SW0;
+    int SW1;
+    int SW2;
+    int SW3;
+    int SW4;
+    int SW5;
+    int SW6;
+    int SW7;  
+};
+typedef struct swtState SwtState;
+
+
+struct btnState {
+
+    int BTNU;
+    int BTND;
+    int BTNL;
+    int BTNR;
+};
+typedef struct btnState BtnState;
+
+
+
 
 
 /*
