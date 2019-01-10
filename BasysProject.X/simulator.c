@@ -625,6 +625,7 @@ void initSimulator()
 
 void execute()
 {
+    SWT_refreshAll();
     getLcdState();
     if (!executionState.isHaltExecuted) 
     {
