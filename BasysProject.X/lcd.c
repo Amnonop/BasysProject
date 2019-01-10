@@ -524,6 +524,13 @@ void LCD_WriteBytesAtPosCgram(unsigned char *pBytes, unsigned char len, unsigned
 
 //****************new functions******************//
 
+void clearLcdDisplay()
+{
+    //clears lcd display in order to refresh for each interupt
+    LCD_WriteStringAtPos("                                  ", 0, 0);
+    LCD_WriteStringAtPos("                                  ", 1, 0);
+}
+
 void lcdShowInstructionandPc() //already implemented in "initSimulator"
 {
     char instructionString[HEX_WORD_LENGTH + 1];
@@ -606,8 +613,12 @@ void lcdShowSelectedMemory()
     registerSpValue = registers[13];
     sprintf(registerSpString, "%X", registerSpValue);
     strcat(secondLcdLine, registerSpString);
-    LCD_WriteStringAtPos(firstLcdLine, 0, 0);
-    LCD_WriteStringAtPos(secondLcdLine, 1, 0);
+    //LCD_WriteStringAtPos(firstLcdLine, 0, 0);
+    //LCD_WriteStringAtPos(secondLcdLine, 1, 0);
+    if (sw6State==0) LCD_WriteStringAtPos("     sw6 is 0     ", 0, 0);
+    if (sw6State==1) LCD_WriteStringAtPos("     sw6 is 1    ", 0, 0);
+    //LCD_WriteStringAtPos("11", 0, 0);
+    LCD_WriteStringAtPos("11", 1, 0);
 }
 
 void lcdShowInstructionCounter()
@@ -628,8 +639,7 @@ void getLcdState()
     if (currentSwitch12Case != switch12Case)
     {
         currentSwitch12Case = switch12Case;
-        LCD_WriteStringAtPos("", 0, 0);
-        LCD_WriteStringAtPos("", 1, 0);
+        clearLcdDisplay();
     }
     switch(switch12Case)
     {
@@ -645,7 +655,7 @@ void getLcdState()
         }
         case 2:
         {
-            lcdShowSelectedMemory(); //waiting for MEMROY[AAA] and to $SP
+            lcdShowSelectedMemory(); 
             break;
         }
         case 3:
