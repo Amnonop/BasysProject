@@ -571,31 +571,32 @@ void lcdShowSelectedMemory()
     int sw5State = SWT_GetValue(5);
     int sw6State = SWT_GetValue(6);
     int switch56Case = sw5State + (sw6State*2); 
-    switch(switch56Case)
-    {
-        case 0:
-        {
-            memoryAdress = 0x000;
-            break;
-        }
-        case 1:
-        {
-            memoryAdress = 0x100;
-            break;
-        }
-        case 2:
-        {
-            memoryAdress = 0x1FF;
-            break;
-        }
-        case 3:
-        {
-            memoryAdress = 0x1FF;
-            break;
-        }
-    }
+//    switch(switch56Case)
+//    {
+//        case 0:
+//        {
+//            memoryAdress = 0x000;
+//            break;
+//        }
+//        case 1:
+//        {
+//            memoryAdress = 0x100;
+//            break;
+//        }
+//        case 2:
+//        {
+//            memoryAdress = 0x1FF;
+//            break;
+//        }
+//        case 3:
+//        {
+//            memoryAdress = 0x1FF;
+//            break;
+//        }
+//    }
     if(BTN_GetValue(0)) memoryAdress++;
-    if (memoryAdress>0X1FF) memoryAdress = 0X000;
+    if (memoryAdress>0x1FF) memoryAdress = 0x000;
+    memoryAdress = sw6State;
     sprintf(memoryAdressString, "%X", memoryAdress);
     strcat(firstLcdLine, memoryAdressString);
     strcat(firstLcdLine, " = ");
