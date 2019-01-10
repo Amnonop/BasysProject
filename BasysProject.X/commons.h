@@ -71,5 +71,6 @@ ExecutionState executionState;
 BtnState btnState;
 Instruction decodedInstruction;
 int instructionCounter;
+SwtState swtState;
 
 #endif

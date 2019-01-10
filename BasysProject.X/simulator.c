@@ -625,9 +625,11 @@ void initSimulator()
 
 void execute()
 {
+    SWT_refreshAll();
+    getLcdState();
     if (!executionState.isHaltExecuted) 
     {
-        display(memory[executionState.pc], executionState.pc);
+        //display(memory[executionState.pc], executionState.pc);
         decodeInstruction(memory[executionState.pc], &decodedInstruction);
         executeInstruction(&decodedInstruction, memory, registers, &executionState);
         instructionCounter++;

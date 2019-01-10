@@ -26,6 +26,7 @@
 #include <sys/attribs.h>
 #include "config.h"
 #include "swt.h"
+#include "commons.h"
 
 /* ************************************************************************** */
 
@@ -75,9 +76,9 @@ void SWT_ConfigurePins()
     tris_SWT_SWT7 = 1;
 
     // disable analog (set pins as digital))
-    ansel_SWT_SWT5 = 0;
-    ansel_SWT_SWT6 = 0;
-    ansel_SWT_SWT7 = 0;    
+      ansel_SWT_SWT5 = 0;
+      ansel_SWT_SWT6 = 0;
+      ansel_SWT_SWT7 = 0;    
 }
 
 /***	SWT_GetValue
@@ -160,6 +161,20 @@ unsigned char SWT_GetGroupValue()
     }
     return bResult;
 }
+//*************new functions*****************//
+
+void SWT_refreshAll()
+{
+    swtState.SW0 = SWT_GetValue(0);
+    swtState.SW1 = SWT_GetValue(1);
+    swtState.SW2 = SWT_GetValue(2);
+    swtState.SW3 = SWT_GetValue(3);
+    swtState.SW4 = SWT_GetValue(4);
+    swtState.SW5 = SWT_GetValue(5);
+    swtState.SW6 = SWT_GetValue(6);
+    swtState.SW7 = SWT_GetValue(7);
+}
+
 /* *****************************************************************************
  End of File
  */
