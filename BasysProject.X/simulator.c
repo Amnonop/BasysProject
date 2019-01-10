@@ -568,43 +568,6 @@ void display(int instruction, int pc)
     LCD_WriteStringAtPos(pcString, 1, 0);
 }
 
-/*
-** Summary:
-**		Executes the instructions written in the memin.txt file.
-**		Each instruction is decoded then executed.
-**		In the end, it outputs the memory, registers and instruction count to files.
-** Parameters:
-**		commandLineArgs - an array containing the command line arguments passed
-*/
-
-void runSimulator()
-{
-	
-    int i;
-	for (i = 0; i < NUM_OF_REGISTERS; i++)
-	{
-		registers[i] = 0;
-	}
-
-	loadFibonachi(memory);
-
-	
-	executionState.pc = 0;
-	executionState.isHaltExecuted = 0;
-
-	int instructionCounter = 0;
-	
-    
-    LCD_Init();
-	while (!executionState.isHaltExecuted)
-	{
-        display(memory[executionState.pc], executionState.pc);
-		decodeInstruction(memory[executionState.pc], &decodedInstruction);
-		executeInstruction(&decodedInstruction, memory, registers, &executionState);
-		instructionCounter++;
-	}
-}
-
 void initSimulator()
 {
     int i;
