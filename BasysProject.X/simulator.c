@@ -3,6 +3,7 @@
 #include "commons.h"
 #include "instruction_executer.h"
 #include "lcd.h"
+#include "swt.h"
 
 char* fibonachiInputMemory[MEMORY_SIZE] = {"0D000200",
 "C3000100",
@@ -626,12 +627,28 @@ void initSimulator()
 void execute()
 {
     SWT_refreshAll();
+    BTN_refreshAll();
     getLcdState();
+    
     if (!executionState.isHaltExecuted) 
+        
     {
-        //display(memory[executionState.pc], executionState.pc);
-        decodeInstruction(memory[executionState.pc], &decodedInstruction);
-        executeInstruction(&decodedInstruction, memory, registers, &executionState);
-        instructionCounter++;
+        executionState.isPause = (executionState.isPause || btnState.BTNL);  
+        if(!executionState.isPause)       
+        {
+            decodeInstruction(memory[executionState.pc], &decodedInstruction);
+            executeInstruction(&decodedInstruction, memory, registers, &executionState);
+            instructionCounter++;
+        }
+        else
+        {
+            if(btnState.BTNR)
+            {
+                decodeInstruction(memory[executionState.pc], &decodedInstruction);
+                executeInstruction(&decodedInstruction, memory, registers, &executionState);
+                instructionCounter++;
+            }
+        }
+        
     }
 }

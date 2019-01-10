@@ -41,6 +41,7 @@ struct btnState {
 
     int BTNU;
     int BTND;
+    int BTNC;
     int BTNL;
     int BTNR;
 };
