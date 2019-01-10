@@ -38,6 +38,12 @@ int setLedsRegister(int value)
     LED_SetGroupValue(IORegisters[LedsRegister]);
 }
 
+int setSsdRegister(int value)
+{
+    IORegisters[SSDRegister] = value;
+    SSD_WriteDigitsGrouped(IORegisters[SSDRegister], 0);
+}
+
 void setIORegister(int registerIndex, int value)
 {
     if (!isReadOnlyRegister(registerIndex)) 
@@ -46,6 +52,9 @@ void setIORegister(int registerIndex, int value)
         {
             case LedsRegister:
                 setLedsRegister(value);
+                break;
+            case SSDRegister:
+                setSsdRegister(value);
                 break;
             default:
                 IORegisters[registerIndex] = value;

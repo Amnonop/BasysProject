@@ -80,34 +80,15 @@ unsigned char digits[4];
 unsigned int wCnt = 0, baseCnt = 0;
 void __ISR(_TIMER_1_VECTOR, ipl7) Timer1ISR(void) 
 {
-    // OPTION 2: INTERRUPT (periodic)
-    // additional (and better) solution for counter implementation
-    // that is implemented via INTERRUPT
-    
-    /*starts here*/
     execute();
     updateCounterRegister();
-    if(baseCnt++ == 32)
-    {
-        //display the counter values on the 4 digits available
-        SSD_WriteDigitsGrouped(wCnt++, 0);
-        baseCnt = 0;        
-    }
-    
-    //if button C is pressed, reset the counter
-    if (BTN_GetValue(2))
-    {
-        wCnt=0;
-    }
-    /*ends here*/
-    
     
     static unsigned char idxCurrDigit = 0;
     unsigned char currDigit, idx;
 
     idx = (idxCurrDigit++) & 3;
     currDigit = digits[idx];
-//     1. deactivate all digits (anodes)
+    // 1. deactivate all digits (anodes)
     lat_SSD_AN1 = 1; // deactivate digit 1;
     lat_SSD_AN2 = 1; // deactivate digit 2;    
     lat_SSD_AN3 = 1; // deactivate digit 3;   
@@ -124,7 +105,6 @@ void __ISR(_TIMER_1_VECTOR, ipl7) Timer1ISR(void)
     lat_SSD_DP = (currDigit & 0x80) >> 7;     
     
     // 3. activate the current digit (anodes)
-    
     switch(idx)
     {
         case 0:
@@ -140,13 +120,8 @@ void __ISR(_TIMER_1_VECTOR, ipl7) Timer1ISR(void)
             lat_SSD_AN3 = 0; // activate digit 3;   
             break; 
     }    
-       
     
     IFS0bits.T1IF = 0;       // clear interrupt flag
-    
-    
-
-    
 }
 
 /* ------------------------------------------------------------ */
