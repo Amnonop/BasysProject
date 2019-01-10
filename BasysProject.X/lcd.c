@@ -527,8 +527,8 @@ void LCD_WriteBytesAtPosCgram(unsigned char *pBytes, unsigned char len, unsigned
 void clearLcdDisplay()
 {
     //clears lcd display in order to refresh for each interupt
-    LCD_WriteStringAtPos("                                  ", 0, 0);
-    LCD_WriteStringAtPos("                                  ", 1, 0);
+    LCD_WriteStringAtPos("                                    ", 0, 0);
+    LCD_WriteStringAtPos("                                      ", 1, 0);
 }
 
 void lcdShowInstructionandPc() //already implemented in "initSimulator"
@@ -539,8 +539,6 @@ void lcdShowInstructionandPc() //already implemented in "initSimulator"
     LCD_WriteStringAtPos(instructionString, 0, 0);
     sprintf(pcString, "%03X", executionState.pc);
     LCD_WriteStringAtPos(pcString, 1, 0);
-//      LCD_WriteStringAtPos("1 ", 0, 0);
-//      LCD_WriteStringAtPos("1 ", 1, 0);
 }
 
 lcdShowSelectedRegister()
@@ -561,8 +559,6 @@ lcdShowSelectedRegister()
     strcat(firstLcdLine,registerValueString);
     LCD_WriteStringAtPos(firstLcdLine, 0, 0);
     LCD_WriteStringAtPos(secondLcdLine, 1, 0);
-//      LCD_WriteStringAtPos("2 ", 0, 0);
-//      LCD_WriteStringAtPos("2 ", 1, 0);
 }
 
 void lcdShowSelectedMemory()
@@ -575,35 +571,34 @@ void lcdShowSelectedMemory()
     int memoryValue = 0;
     int registerSpValue = 0;
     char registerSpString[] = "";
-    int sw5State = SWT_GetValue(3);
-    int sw6State = SWT_GetValue(4);
-    int switch56Case = sw5State + (sw6State*2); 
-//    switch(switch56Case)
-//    {
-//        case 0:
-//        {
-//            memoryAdress = 0x000;
-//            break;
-//        }
-//        case 1:
-//        {
-//            memoryAdress = 0x100;
-//            break;
-//        }
-//        case 2:
-//        {
-//            memoryAdress = 0x1FF;
-//            break;
-//        }
-//        case 3:
-//        {
-//            memoryAdress = 0x1FF;
-//            break;
-//        }
-//    }
+    int sw2State = swtState.SW2;
+    int sw3State = swtState.SW3;
+    int switch23Case = sw2State + (sw3State*2); 
+    switch(switch23Case)
+    {
+        case 0:
+        {
+            memoryAdress = 0x000;
+            break;
+        }
+        case 1:
+        {
+            memoryAdress = 0x100;
+            break;
+        }
+        case 2:
+        {
+            memoryAdress = 0x1FF;
+            break;
+        }
+        case 3:
+        {
+            memoryAdress = 0x1FF;
+            break;
+        }
+    }
     if(BTN_GetValue(0)) memoryAdress++;
     if (memoryAdress>0x1FF) memoryAdress = 0x000;
-    memoryAdress = sw6State;
     sprintf(memoryAdressString, "%X", memoryAdress);
     strcat(firstLcdLine, memoryAdressString);
     strcat(firstLcdLine, " = ");
@@ -613,16 +608,17 @@ void lcdShowSelectedMemory()
     registerSpValue = registers[13];
     sprintf(registerSpString, "%X", registerSpValue);
     strcat(secondLcdLine, registerSpString);
-    //LCD_WriteStringAtPos(firstLcdLine, 0, 0);
-    //LCD_WriteStringAtPos(secondLcdLine, 1, 0);
-//    if (sw6State==0) LCD_WriteStringAtPos("     sw6 is 0     ", 0, 0);
+    LCD_WriteStringAtPos(firstLcdLine, 0, 0);
+    LCD_WriteStringAtPos(secondLcdLine, 1, 0);
+
+     //tests///
+    //    if (sw6State==0) LCD_WriteStringAtPos("     sw6 is 0     ", 0, 0);
 //    if (sw6State==1) LCD_WriteStringAtPos("     sw6 is 1    ", 0, 0);
 //    if (sw5State==0) LCD_WriteStringAtPos("     sw5 is 0     ", 1, 0);
 //    if (sw5State==1) LCD_WriteStringAtPos("     sw5 is 1    ", 1, 0);
-     //tests///
-    memoryValue = SWT_GetGroupValue();
-    sprintf(memoryValueString, "%X", memoryValue);
-    LCD_WriteStringAtPos(memoryValueString, 0, 0);
+//    memoryValue = SWT_GetGroupValue();
+//    sprintf(memoryValueString, "%X", memoryValue);
+//    LCD_WriteStringAtPos(memoryValueString, 0, 0);
 //    LCD_WriteStringAtPos("11", 1, 0);
 }
 
@@ -636,8 +632,8 @@ int currentSwitch12Case = 0;
 void getLcdState()
 {
     // **should be checked frequently**//
-    int sw0State = SWT_GetValue(0);
-    int sw1State = SWT_GetValue(1);
+    int sw0State = swtState.SW0;
+    int sw1State = swtState.SW1;
     int switch12Case = sw0State + (sw1State*2);
     if (currentSwitch12Case != switch12Case)
     {
