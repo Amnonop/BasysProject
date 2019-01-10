@@ -18,10 +18,37 @@
 **			has been executed, false otherwise
 */
 struct executionState {
+    int isPause;
 	int pc;
 	int isHaltExecuted;
 };
 typedef struct executionState ExecutionState;
+
+struct swtState {
+    int SW0;
+    int SW1;
+    int SW2;
+    int SW3;
+    int SW4;
+    int SW5;
+    int SW6;
+    int SW7;  
+};
+typedef struct swtState SwtState;
+
+
+struct btnState {
+
+    int BTNU;
+    int BTND;
+    int BTNC;
+    int BTNL;
+    int BTNR;
+};
+typedef struct btnState BtnState;
+
+
+
 
 
 /*
@@ -42,7 +69,9 @@ typedef struct instruction Instruction;
 int registers[NUM_OF_REGISTERS];
 int memory[MEMORY_SIZE];
 ExecutionState executionState;
+BtnState btnState;
 Instruction decodedInstruction;
 int instructionCounter;
+SwtState swtState;
 
 #endif

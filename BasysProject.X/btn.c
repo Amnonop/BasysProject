@@ -27,6 +27,7 @@
 #include <sys/attribs.h>
 #include "config.h"
 #include "btn.h"
+#include "commons.h"
 
 
 /* ************************************************************************** */
@@ -179,7 +180,28 @@ unsigned char BTN_GetGroupValue()
     return bResult;
 }
 
+void BTN_refreshAll()
+{
+    btnState.BTNU = BTN_checkIfPressed(0);
+    btnState.BTNL = BTN_checkIfPressed(1);
+    btnState.BTNC = BTN_checkIfPressed(2);
+    btnState.BTNR = BTN_checkIfPressed(3);
+    btnState.BTND = BTN_checkIfPressed(4);
+}
 
+int BTN_checkIfPressed(int btn)
+{
+    int isNowPressed  =0;
+    int bResult       =0;
+    
+    isNowPressed = BTN_GetValue(btn);
+    while (isNowPressed)
+    {
+        bResult = 1;
+        isNowPressed = BTN_GetValue(btn);
+    }   
+    return bResult;
+}
 /* *****************************************************************************
  End of File
  */
