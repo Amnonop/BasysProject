@@ -54,3 +54,13 @@ void setIORegister(int registerIndex, int value)
     }
 }
 
+void updateBtnCRegister()
+{
+    IORegisters[BtnCRegister] = IORegisters[BtnCRegister] + 1;
+}
+
+void updateBtnDRegister() 
+{
+    IORegisters[BtnDRegister] = IORegisters[BtnDRegister] + 1;
+}
+

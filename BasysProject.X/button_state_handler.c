@@ -2,33 +2,40 @@
 #include <sys/attribs.h>
 #include "config.h"
 #include "btn.h"
+#include "commons.h"
+#include "io_registers_handler.h"
 
 // The following defines the time between interrupts
 #define BTN_TMR_TIME    0.5 // 0.5 sec for each tick (interrupt every 0.5 sec)
 
-void BTN_refreshAll() {
-    btnState.BTNU = BTN_checkIfPressed(0);
-    btnState.BTNL = BTN_checkIfPressed(1);
-    btnState.BTNC = BTN_checkIfPressed(2);
-    btnState.BTNR = BTN_checkIfPressed(3);
-    btnState.BTND = BTN_checkIfPressed(4);
+void setButtonCenterState()
+{
+    int currentButtonState = BTN_GetValue(2);
+    if (btnState.BTNC != currentButtonState) 
+    {
+        btnState.BTNC = currentButtonState;
+        updateBtnCRegister();
+    }
 }
 
-int BTN_checkIfPressed(int btn) {
-    int isNowPressed = 0;
-    int bResult = 0;
-
-    isNowPressed = BTN_GetValue(btn);
-    while (isNowPressed) {
-        bResult = 1;
-        isNowPressed = BTN_GetValue(btn);
+void setButtonDownState()
+{
+    int currentButtonState = BTN_GetValue(3);
+    if (btnState.BTND != currentButtonState) 
+    {
+        btnState.BTND = currentButtonState;
+        updateBtnDRegister();
     }
-    return bResult;
 }
 
 void __ISR(_TIMER_2_VECTOR, ipl7) Timer5ISR(void)
 {
-    
+    btnState.BTNU = BTN_GetValue(0);
+    btnState.BTNL = BTN_GetValue(1);
+    setButtonCenterState();
+    setButtonDownState();
+    btnState.BTNR = BTN_GetValue(3);
+    btnState.BTND = BTN_GetValue(4);
 }
 
 void timer2Setup() 
