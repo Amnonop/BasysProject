@@ -37,6 +37,7 @@
       <itemPath>io_registers_handler.c</itemPath>
       <itemPath>swt.c</itemPath>
       <itemPath>led.c</itemPath>
+      <itemPath>button_state_handler.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
