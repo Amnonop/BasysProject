@@ -23,57 +23,56 @@ stopper:
 
 
 update_timer:
+	
 	in	$s2, $zero, $zero, $zero, 0				# :(update) set $s0 = IORegister[0]
-	add $t2, $zero, $zero, $zero, 0x0000		#
-	add $t3, $zero, $zero, $zero, 0x0000		#
+	add $t2, $zero, $zero, $zero, 0		#
+	add $t3, $zero, $zero, $zero, 0		#
 	in  $a1, $zero, $zero, $zero, 4				# : set $a1 = IORegister[4]
-	add $t2, $zero, $zero, $zero, 0x0009		#
-	add $t3, $zero, $zero, $zero, 0x0050		#
-	and $t1, $a1, $t2, $zero, 0x0009			#
+	add $t2, $zero, $zero, $zero, 0x9		#
+	add $t3, $zero, $zero, $zero, 0x50		#
+	and $t1, $a1, $t2, $zero, 0x9			#
 	branch	$zero, $t1, $t2, 1, up_sec			#
-	and $t1, $a1, $t3, $zero, 0x0050			#
+	and $t1, $a1, $t3, $zero, 0x50			#
 	branch	$zero, $t1, $t3, 1, up_ten_sec		#
-	add $t2, $zero, $zero, $zero, 0x0000		#
-	add $t3, $zero, $zero, $zero, 0x0000		#
-	add $t2, $zero, $zero, $zero, 0x0900		#
-	add $t3, $zero, $zero, $zero, 0x5000		#
-	and $t1, $a1, $t2, $zero, 0x900				#
+	
+	sra $at, $a1, $zero, $zero, 8			#
+	and $t1, $at, $t2, $zero, 0x9				#
 	branch	$zero, $t1, $t2, 1, up_mins			#
-	and $t1, $a1, $t3, $zero, 0x5000			#
+	and $t1, $at, $t3, $zero, 0x50			#
 	branch	$zero, $t1, $t3, 1, up_ten_mins		#
 
 up_sec:
-	add $t2, $zero, $zero, $zero, 0x0000		#
-	add $t3, $zero, $zero, $zero, 0x0000		#
-	and $t2, $t2, $t2, $zero, 0x0000			# compare elasped time to other channels
-	add $a1, $zero, $zero, $zero, 0x0001		#
+	add $t2, $zero, $zero, $zero, 0x0		#
+	add $t3, $zero, $zero, $zero, 0x0		#
+	and $t2, $t2, $t2, $zero, 0x0			# compare elasped time to other channels
+	add $a1, $zero, $zero, $zero, 0x1		#
 	out $a1, $zero, $zero, $zero, 4				# update SSD
 	branch	$zero, $zero, $zero, $zero, stopper	#
 
 up_ten_sec:
-	add $t2, $zero, $zero, $zero, 0x0000		#
-	add $t3, $zero, $zero, $zero, 0x0000		#
+	add $t2, $zero, $zero, $zero, 0x0		#
+	add $t3, $zero, $zero, $zero, 0x0		#
 	and $a1, $a1, $a1, $zero, 0xFFF0			#
-	add $a1, $zero, $zero, $zero, 0x0010		#
+	add $a1, $zero, $zero, $zero, 0x10		#
 	out $a1, $zero, $zero, $zero, 4				#
 	branch	$zero, $zero, $zero, $zero, stopper #
 
 up_mins:
-	add $t2, $zero, $zero, $zero, 0x0000		#
-	add $t3, $zero, $zero, $zero, 0x0000		#
-	and $a1, $a1, $a1, $zero, 0xF0FF			#
-	add $a1, $zero, $zero, $zero, 0x0100		#
+	add $t2, $zero, $zero, $zero, 0x0		#
+	add $t3, $zero, $zero, $zero, 0x0		#
+	and $a1, $a1, $a1, $zero, 0xFF00			#
+	add $a1, $zero, $zero, $zero, 0x100		#
 	out $a1, $zero, $zero, $zero, 4				#
 	branch	$zero, $zero, $zero, $zero, stopper #
 
 up_ten_mins:
-	add $t2, $zero, $zero, $zero, 0x0000		#
-	add $t3, $zero, $zero, $zero, 0x0000		#
-	and $a1, $a1, $a1, $zero, 0x0FFF			#
+	add $t2, $zero, $zero, $zero, 0x0		#
+	add $t3, $zero, $zero, $zero, 0x0		#
+	and $a1, $a1, $a1, $zero, 0xF000			#
 	add $a1, $zero, $zero, $zero, 0x1000		#
 	out $a1, $zero, $zero, $zero, 4				#
 	branch	$zero, $zero, $zero, $zero, stopper #
-	
+	##add: if 59:59 -> 00
 pause_1:
 	in	$t2, $zero, $zero, $zero, 2		# : (update) set $t2 = IORegister[2] 
 	out	$t1, $zero, $zero, $zero, 1	# : set IORegister[1] = 1 means LD0 is on
