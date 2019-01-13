@@ -80,8 +80,8 @@ unsigned char digits[4];
 unsigned int wCnt = 0, baseCnt = 0;
 void __ISR(_TIMER_1_VECTOR, ipl7) Timer1ISR(void) 
 {
-    //execute();
-    //updateCounterRegister();
+    execute();
+    updateCounterRegister();
     
     static unsigned char idxCurrDigit = 0;
     unsigned char currDigit, idx;
