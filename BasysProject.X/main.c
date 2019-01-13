@@ -1,33 +1,3 @@
-//#include <stdio.h>
-//#include "commons.h"
-//#include "command_line_arguments.h"
-#include "simulator.h"
-#include "io_registers_handler.h"
-
-//
-///*
-//** Summary: 
-//**		Main entry point to the program. It takes a memin.txt file as input 
-//**		and simulates the fetch-decode-execute loop of a processor to execute the 
-//**		input program.
-//** Parameters:
-//**		argc - number of command line arguments passed
-//**		argv - an array containing the command line arguments passed
-//*/
-//int main(int argc, char *argv[])
-//{
-//	checkCommandLineArguments(argc);
-//	runSimulator(argv);
-//}
-
-/* 
- * File:   main.c
- * Author: Monica Ignat
- *
- * Created on March 31, 2017
- * 
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <xc.h>
@@ -38,6 +8,9 @@
 #include "ssd.h"
 #include "btn.h"
 #include "swt.h"
+#include "simulator.h"
+#include "io_registers_handler.h"
+#include "buttonStateHandler.h"
 
 
 #pragma config JTAGEN = OFF     
@@ -94,8 +67,8 @@ void startSimulator()
     unsigned int wCnt = 0, baseCnt = 0;
     LCD_Init(); 
     SWT_Init();
-    //SSD_Init();
     BTN_Init();
+    buttonStateHandlerInit();
     
     initSimulator();
     SSD_Init();
