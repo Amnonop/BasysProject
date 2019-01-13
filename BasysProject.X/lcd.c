@@ -558,47 +558,54 @@ lcdShowSelectedRegister()
     strcat(firstLcdLine, " = ");
     strcat(firstLcdLine,registerValueString);
     LCD_WriteStringAtPos(firstLcdLine, 0, 0);
-    LCD_WriteStringAtPos(secondLcdLine, 1, 0);
+    LCD_WriteStringAtPos("", 1, 0);
 }
 
 void lcdShowSelectedMemory()
 {
     char firstLcdLine[] = "M";
-    char secondLcdLine[] = "RSP = ";
+    char secondLcdLine[] = "";
     char memoryAdressString[] = "";
     int memoryAdress = 0X000;
     char memoryValueString[] = "";
     int memoryValue = 0;
     int registerSpValue = 0;
+    char registerTempSpString[] = "";
     char registerSpString[] = "";
     int sw5State = swtState.SW5;
     int sw6State = swtState.SW6;
     int switch56Case = sw5State + (sw6State*2); 
-    switch(switch56Case)
-    {
-        case 0:
+        
+    if  (t_executionState.lcdState != 2)
+        switch(switch56Case)
         {
-            memoryAdress = 0x000;
-            break;
+            case 0:
+            {
+                memoryAdress = 0x000;
+                break;
+            }
+            case 1:
+            {
+                memoryAdress = 0x100;
+                break;
+            }
+            case 2:
+            {
+                memoryAdress = 0x1FF;   
+                break;
+            }
+            case 3:
+            {
+                memoryAdress = 0x1FF;
+                break;
+            }
         }
-        case 1:
-        {
-            memoryAdress = 0x100;
-            break;
-        }
-        case 2:
-        {
-            memoryAdress = 0x1FF;
-            break;
-        }
-        case 3:
-        {
-            memoryAdress = 0x1FF;
-            break;
-        }
-    }
+    else
+        memoryAdress = t_executionState.memAdress4lcd;
+    
     if(btnState.BTNU) memoryAdress++;
     if (memoryAdress>0x1FF) memoryAdress = 0x000;
+    t_executionState.memAdress4lcd = memoryAdress;
     sprintf(memoryAdressString, "%X", memoryAdress);
     strcat(firstLcdLine, memoryAdressString);
     strcat(firstLcdLine, " = ");
@@ -606,9 +613,13 @@ void lcdShowSelectedMemory()
     sprintf(memoryValueString, "%X", memoryValue);
     strcat(firstLcdLine, memoryValueString);
     registerSpValue = registers[13];
-    sprintf(registerSpString, "%03X", registerSpValue);
-    strcat(secondLcdLine, registerSpString);
+    sprintf(registerTempSpString, "   ");
+    sprintf(registerTempSpString, "%2X", registerSpValue);
+    
     LCD_WriteStringAtPos(firstLcdLine, 0, 0);
+    strcpy(registerSpString, (registerTempSpString));
+    strcpy(secondLcdLine,"RSP ="); 
+    strcat(secondLcdLine, registerSpString);
     LCD_WriteStringAtPos(secondLcdLine, 1, 0);
 
      //tests///
@@ -644,22 +655,26 @@ void getLcdState()
     {
         case 0:
         {
-            lcdShowInstructionandPc(); 
+            lcdShowInstructionandPc();
+            t_executionState.lcdState = 0;
             break;
         }
         case 1:
         {
             lcdShowSelectedRegister();
+            t_executionState.lcdState = 1;
             break;
         }
         case 2:
         {
-            lcdShowSelectedMemory(); 
+            lcdShowSelectedMemory();
+            t_executionState.lcdState = 2;
             break;
         }
         case 3:
         {
             lcdShowInstructionCounter();
+            t_executionState.lcdState = 3;
             break;
         }
     }

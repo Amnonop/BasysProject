@@ -19,8 +19,10 @@
 */
 struct t_executionState {
     int isPause;
+    int lcdState;
 	int pc;
 	int isHaltExecuted;
+    int memAdress4lcd;
 };
 typedef struct t_executionState ExecutionState;
 
