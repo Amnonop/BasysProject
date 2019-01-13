@@ -2,6 +2,7 @@
 //#include "commons.h"
 //#include "command_line_arguments.h"
 #include "simulator.h"
+#include "io_registers_handler.h"
 
 //
 ///*
@@ -98,6 +99,12 @@ void startSimulator()
     
     initSimulator();
     SSD_Init();
+    
+    while (1)
+    {
+        execute();
+        updateCounterRegister();
+    }
 
 // OPTION 1: POLLING    
 // ORIGINAL CODE from SSDDemo Project
