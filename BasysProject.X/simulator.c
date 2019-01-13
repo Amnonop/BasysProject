@@ -5,6 +5,7 @@
 #include "lcd.h"
 #include "swt.h"
 #include "io_registers_handler.h"
+#include "buttonStateHandler.h"
 
 char* stopperInputMemory[MEMORY_SIZE] = {"90000001",
 "90000004",
@@ -1133,13 +1134,11 @@ void initSimulator()
 void execute()
 {
     SWT_refreshAll();
-    updateButtonRegisters();
     getLcdState();
     
     if (!executionState.isHaltExecuted) 
-        
     {
-        executionState.isPause = 0;//(executionState.isPause ^ btnState.BTNL);  
+        executionState.isPause = (executionState.isPause ^ btnState.BTNL);  
         if(!executionState.isPause)       
         {
             decodeInstruction(memory[executionState.pc], &decodedInstruction);
@@ -1155,6 +1154,7 @@ void execute()
                 instructionCounter++;
             }
         }
-        
     }
+    
+    resetButtonsState();
 }

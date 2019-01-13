@@ -7,17 +7,30 @@
 
 void __ISR(_TIMER_5_VECTOR, ipl2) _Timer5Handler(void) 
 {
-    btnState.BTNU = BTN_GetValue(0);
-    btnState.BTNL = BTN_GetValue(1);
-    btnState.BTNC = BTN_GetValue(2);
-    btnState.BTNR = BTN_GetValue(3);
+    if (BTN_GetValue(0)) 
+    {
+        btnState.BTNU = 1;
+    }
+    
+    if (BTN_GetValue(1)) 
+    {
+        btnState.BTNL = 1;
+    }
+    
+    if (BTN_GetValue(2)) 
+    {
+        btnState.BTNC = 1;
+    }
+    
+    if (BTN_GetValue(3)) 
+    {
+        btnState.BTNR = 1;
+    }
     
     if (BTN_GetValue(4)) 
     {
         updateButtonDownRegister();
     }
-
-    btnState.BTND = BTN_GetValue(4);
 
     IFS0bits.T5IF = 0; // clear interrupt flag
 }
@@ -43,4 +56,13 @@ void timer5Setup()
 void buttonStateHandlerInit()
 {
     timer5Setup();
+}
+
+void resetButtonsState()
+{
+    btnState.BTNU = 0;
+    btnState.BTNL = 0;
+    btnState.BTNC = 0;
+    btnState.BTNR = 0;
+    btnState.BTND = 0;
 }
