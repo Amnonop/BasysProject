@@ -9,6 +9,7 @@ void setIORegister(int registerIndex, int value);
 int isReadOnlyRegister(int registerIndex);
 int updateCounterRegister();
 void updateButtonRegisters();
+void updateButtonDownRegister();
 
 #endif
 

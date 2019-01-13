@@ -3,6 +3,7 @@
 #include "config.h"
 #include "commons.h"
 #include "btn.h"
+#include "io_registers_handler.h"
 
 void __ISR(_TIMER_5_VECTOR, ipl2) _Timer5Handler(void) 
 {
@@ -10,6 +11,12 @@ void __ISR(_TIMER_5_VECTOR, ipl2) _Timer5Handler(void)
     btnState.BTNL = BTN_GetValue(1);
     btnState.BTNC = BTN_GetValue(2);
     btnState.BTNR = BTN_GetValue(3);
+    
+    if (BTN_GetValue(4)) 
+    {
+        updateButtonDownRegister();
+    }
+
     btnState.BTND = BTN_GetValue(4);
 
     IFS0bits.T5IF = 0; // clear interrupt flag

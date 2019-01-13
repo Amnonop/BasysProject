@@ -44,6 +44,11 @@ int setSsdRegister(int value)
     SSD_WriteDigitsGrouped(IORegisters[SSDRegister], 0);
 }
 
+void updateButtonDownRegister()
+{
+    IORegisters[BtnDRegister] = IORegisters[BtnDRegister] + 1;
+}
+
 void updateButtonRegisters()
 {
     IORegisters[BtnCRegister] = btnState.BTNC;
