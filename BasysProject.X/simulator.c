@@ -1134,6 +1134,7 @@ void execute()
 {
     SWT_refreshAll();
     BTN_refreshAll();
+    updateButtonRegisters();
     getLcdState();
     
     if (!executionState.isHaltExecuted) 

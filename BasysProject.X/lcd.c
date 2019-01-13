@@ -576,7 +576,7 @@ void lcdShowSelectedMemory()
     int sw6State = swtState.SW6;
     int switch56Case = sw5State + (sw6State*2); 
         
-    if  (t_executionState.lcdState != 2)
+    if  (executionState.lcdState != 2)
         switch(switch56Case)
         {
             case 0:
@@ -601,11 +601,11 @@ void lcdShowSelectedMemory()
             }
         }
     else
-        memoryAdress = t_executionState.memAdress4lcd;
+        memoryAdress = executionState.memAdress4lcd;
     
     if(btnState.BTNU) memoryAdress++;
     if (memoryAdress>0x1FF) memoryAdress = 0x000;
-    t_executionState.memAdress4lcd = memoryAdress;
+    executionState.memAdress4lcd = memoryAdress;
     sprintf(memoryAdressString, "%X", memoryAdress);
     strcat(firstLcdLine, memoryAdressString);
     strcat(firstLcdLine, " = ");
@@ -656,25 +656,25 @@ void getLcdState()
         case 0:
         {
             lcdShowInstructionandPc();
-            t_executionState.lcdState = 0;
+            executionState.lcdState = 0;
             break;
         }
         case 1:
         {
             lcdShowSelectedRegister();
-            t_executionState.lcdState = 1;
+            executionState.lcdState = 1;
             break;
         }
         case 2:
         {
             lcdShowSelectedMemory();
-            t_executionState.lcdState = 2;
+            executionState.lcdState = 2;
             break;
         }
         case 3:
         {
             lcdShowInstructionCounter();
-            t_executionState.lcdState = 3;
+            executionState.lcdState = 3;
             break;
         }
     }

@@ -44,6 +44,12 @@ int setSsdRegister(int value)
     SSD_WriteDigitsGrouped(IORegisters[SSDRegister], 0);
 }
 
+void updateButtonRegisters()
+{
+    IORegisters[BtnCRegister] = btnState.BTNC;
+    IORegisters[BtnDRegister] = btnState.BTND;
+}
+
 void setIORegister(int registerIndex, int value)
 {
     if (!isReadOnlyRegister(registerIndex)) 
