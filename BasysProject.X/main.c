@@ -73,6 +73,7 @@ void startSimulator()
     initSimulator();
     SSD_Init();
     
+    while(1);
 // OPTION 1: POLLING    
 // ORIGINAL CODE from SSDDemo Project
 // The following loop demonstrates POLLING:
