@@ -49,6 +49,11 @@ void updateButtonDownRegister()
     IORegisters[BtnDRegister] = IORegisters[BtnDRegister] + 1;
 }
 
+void updateButtonCenterRegister()
+{
+    IORegisters[BtnCRegister] = IORegisters[BtnCRegister] + 1;
+}
+
 void updateButtonRegisters()
 {
     IORegisters[BtnCRegister] = btnState.BTNC;
