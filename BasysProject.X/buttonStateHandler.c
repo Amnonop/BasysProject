@@ -6,23 +6,28 @@
 #include "io_registers_handler.h"
 
 void __ISR(_TIMER_5_VECTOR, ipl2) _Timer5Handler(void) {
-    if (BTN_GetValue(0)) {
+    if (BTN_GetValue(0)) 
+    {
         btnState.BTNU = 1;
     }
 
-    if (BTN_GetValue(1)) {
+    if (BTN_GetValue(1)) 
+    {
         btnState.BTNL = 1;
     }
 
-    if (BTN_GetValue(2)) {
+    if (BTN_GetValue(2)) 
+    {
         btnState.BTNC = 1;
     }
 
-    if (BTN_GetValue(3)) {
-        btnState.BTNR = 1;
+    if (BTN_GetValue(3)) 
+    {
+        updateButtonCenterRegister();
     }
 
-    if (BTN_GetValue(4)) {
+    if (BTN_GetValue(4)) 
+    {
         updateButtonDownRegister();
     }
 

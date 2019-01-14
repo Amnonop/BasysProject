@@ -10,6 +10,7 @@ int isReadOnlyRegister(int registerIndex);
 int updateCounterRegister();
 void updateButtonRegisters();
 void updateButtonDownRegister();
+void updateButtonCenterRegister();
 
 #endif
 
