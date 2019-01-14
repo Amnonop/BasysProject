@@ -73,16 +73,17 @@ void startSimulator()
     initSimulator();
     SSD_Init();
     
-    int i = 0;
-    while(1)
-    {
+//    int i = 0;
+//    while(1)
+//    {
 //        execute();
 //        updateCounterRegister();
-//        if (i++ == 16)
+//        if (i == 10)
 //        {
-//            updateButtonDownRegister();
+//            updateButtonCenterRegister();
 //        }
-    }
+//        i++;
+//    }
 // OPTION 1: POLLING    
 // ORIGINAL CODE from SSDDemo Project
 // The following loop demonstrates POLLING:

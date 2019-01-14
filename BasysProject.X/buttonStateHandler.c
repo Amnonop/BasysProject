@@ -21,7 +21,7 @@ void __ISR(_TIMER_5_VECTOR, ipl2) _Timer5Handler(void) {
         btnState.BTNC = 1;
     }
 
-    if (BTN_GetValue(3)) 
+    if (BTN_GetValue(2)) 
     {
         updateButtonCenterRegister();
     }
