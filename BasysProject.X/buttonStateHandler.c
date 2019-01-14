@@ -5,30 +5,24 @@
 #include "btn.h"
 #include "io_registers_handler.h"
 
-void __ISR(_TIMER_5_VECTOR, ipl2) _Timer5Handler(void) 
-{
-    if (BTN_GetValue(0)) 
-    {
+void __ISR(_TIMER_5_VECTOR, ipl2) _Timer5Handler(void) {
+    if (BTN_GetValue(0)) {
         btnState.BTNU = 1;
     }
-    
-    if (BTN_GetValue(1)) 
-    {
+
+    if (BTN_GetValue(1)) {
         btnState.BTNL = 1;
     }
-    
-    if (BTN_GetValue(2)) 
-    {
+
+    if (BTN_GetValue(2)) {
         btnState.BTNC = 1;
     }
-    
-    if (BTN_GetValue(3)) 
-    {
+
+    if (BTN_GetValue(3)) {
         btnState.BTNR = 1;
     }
-    
-    if (BTN_GetValue(4)) 
-    {
+
+    if (BTN_GetValue(4)) {
         updateButtonDownRegister();
     }
 
@@ -38,8 +32,7 @@ void __ISR(_TIMER_5_VECTOR, ipl2) _Timer5Handler(void)
 // Timer period in seconds
 #define TMR_TIME    0.0003 // 300 us for each tick
 
-void timer5Setup() 
-{
+void timer5Setup() {
     PR5 = (int) (((float) (TMR_TIME * PB_FRQ) / 256) + 0.5); //set period register, generates one interrupt every 300 us                     //             set period register, generates one interrupt every 300 us
     TMR5 = 0; //    initialize count to 0
     T5CONbits.TCKPS = 3; //    1:256 prescaler value
@@ -53,13 +46,11 @@ void timer5Setup()
     macro_enable_interrupts(); //    enable interrupts at CPU
 }
 
-void buttonStateHandlerInit()
-{
+void buttonStateHandlerInit() {
     timer5Setup();
 }
 
-void resetButtonsState()
-{
+void resetButtonsState() {
     btnState.BTNU = 0;
     btnState.BTNL = 0;
     btnState.BTNC = 0;

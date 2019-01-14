@@ -65,7 +65,7 @@ const unsigned char digitSegments[]= {
 #define NO_DIGITS sizeof(digitSegments)/sizeof(digitSegments[0])
 unsigned char digits[4];
 // The following defines the time between interrupts
-#define TMR_TIME    0.03120 // 31.25 msec for each tick (interrupt every 31.20ms)
+#define TMR_TIME    0.002 // 31.25 msec for each tick (interrupt every 31.20ms)
 
 /***	Timer1ISR
 **
@@ -80,8 +80,12 @@ unsigned char digits[4];
 unsigned int wCnt = 0, baseCnt = 0;
 void __ISR(_TIMER_1_VECTOR, ipl7) Timer1ISR(void) 
 {
-    execute();
-    updateCounterRegister();
+    if (baseCnt++ == 15) 
+    {
+        execute();
+        updateCounterRegister();
+        baseCnt = 0;
+    }
     
     static unsigned char idxCurrDigit = 0;
     unsigned char currDigit, idx;
