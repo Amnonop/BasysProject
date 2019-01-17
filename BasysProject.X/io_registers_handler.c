@@ -41,7 +41,7 @@ int setLedsRegister(int value)
 int setSsdRegister(int value)
 {
     IORegisters[SSDRegister] = value;
-    SSD_WriteDigitsGrouped(IORegisters[SSDRegister], 0);
+    SSD_WriteDigitsGrouped(IORegisters[SSDRegister], 4);
 }
 
 void updateButtonDownRegister()

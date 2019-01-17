@@ -1129,6 +1129,8 @@ void initSimulator()
 	executionState.isHaltExecuted = 0;
 
 	instructionCounter = 0;
+    
+    LCD_WriteStringAtPos("", 0, 0);
 }
 
 void execute()
