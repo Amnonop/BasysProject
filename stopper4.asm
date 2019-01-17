@@ -37,7 +37,7 @@ update_timer:
 up_sec:
 	add $t2, $zero, $zero, $zero, 0x0		#
 	and $t2, $t2, $t2, $zero, 0x0			# compare elasped time to other channels
-	add $s1, $s1, $zero, $zero, 0x1			#			
+	add $s1, $s1, $zero, $zero, 0x1			#
 	out $s1, $zero, $zero, $zero, 4				# update SSD
 	in	$t2, $zero, $zero, $zero, 2			# :
 	branch	$zero, $zero, $zero, $zero, stopper	#
@@ -64,13 +64,13 @@ up_ten_mins:
 	add $t2, $zero, $zero, $zero, 5				#
 	sra	$a1, $a1, $zero, $zero, 12				#
 	and $at, $a1, $t2, $zero, 5					#
-	branch $zero, $at, $t2, 0, reset_clock		#		
+	branch $zero, $at, $t2, 0, reset_clock		#
 	add $a1, $a1, $zero, $zero, 1				#
 	sll $s1, $a1, $zero, $zero, 12				#
 	out	$s1, $zero, $zero, $zero, 4				# : set IORegister[4] = 0
 	in	$t2, $zero, $zero, $zero, 2			# :
 	branch	$zero, $zero, $zero, $zero, stopper #
-	
+
 reset_clock:
 	out $zero, $zero, $zero, $zero, 4				#
 	in	$s1, $zero, $zero, $zero, 4					#
@@ -79,18 +79,29 @@ reset_clock:
 	in	$t2, $zero, $zero, $zero, 2		# : (update) set $t2 = IORegister[2]
 	branch	$zero, $zero, $zero, $zero, stopper		#
 
-pause_1:
-	in	$at, $zero, $zero, $zero, 2		# : (update) set $at = IORegister[2] 
-	add	$gp, $zero, $zero, $zero, 1		# :
-	out	$gp, $zero, $zero, $zero, 1		# : set IORegister[1] = 1 means LD0 is on
-	add $gp, $zero, $zero, $zero, 160	# : set $a2 = 160 = 32*5  (5 sec) #stalling for time delay between in $t2 and in	$a0
-	in	$a1, $zero, $zero, $zero, 0		# : set $a1 = IORegister[0]
-	sub	$s0, $a1, $t1, $zero, 0			# : $s0 = $a1 - $t1 (time difference) 
+pause_1:																									# enter PAUSE mode
+	in			$t2, 		$zero, 	$zero, 	$zero, 	2								# update current counter of BTNC
+	branch	$zero,	$zero,	$zero,	0,			pause_mode			# enter PAUSE mode
+	#in	$at, $zero, $zero, $zero, 2		# : (update) set $at = IORegister[2]
+	#add	$gp, $zero, $zero, $zero, 1		# :
+	#out	$gp, $zero, $zero, $zero, 1		# : set IORegister[1] = 1 means LD0 is on
+	#add $gp, $zero, $zero, $zero, 160	# : set $a2 = 160 = 32*5  (5 sec) #stalling for time delay between in $t2 and in	$a0
+	#in	$a1, $zero, $zero, $zero, 0		# : set $a1 = IORegister[0]
+	#sub	$s0, $a1, $t1, $zero, 0			# : $s0 = $a1 - $t1 (time difference)
 			#in	$v0, $zero, $zero, $zero, 3		# : set $a1 = IORegister[3] -> BTND
 			#branch	$zero, $t3, $v0, 1, BTND	# : if BTND changed
-			#branch	$zero, $s0, $gp, 2, led_change		# : if $s0 > 160 
-	branch	$zero, $at, $a0, 1, pause_2			# : break loop when $a0 != $at means IORegister[2]
-	branch $zero, $zero, $zero, $zero, pause_1	# :jump back to pause_1
+			#branch	$zero, $s0, $gp, 2, led_change		# : if $s0 > 160
+	#branch	$zero, $at, $a0, 1, pause_2			# : break loop when $a0 != $at means IORegister[2]
+	#branch $zero, $zero, $zero, $zero, pause_1	# :jump back to pause_1
+
+pause_mode:
+	in			$a0, 		$zero, 	$zero, 	$zero, 	2								# $a0 = IORegister[2]
+	branch	$zero,	$t2, 		$a0, 		1, 			exit_pause			# if BTNC state changed, exit PAUSE mode
+	branch	$zero,	$zero,	$zero,	0,			pause_mode			# continue PAUSE mode
+
+exit_pause:
+	in			$t2, 		$zero, 	$zero, 	$zero, 	2								# update current counter of BTNC
+	branch	$zero,	$zero,	$zero,	0,			stopper					# enter PAUSE mode
 
 BTND:
 	in	$t3, $zero, $zero, $zero, 3		# : update $t3 to new BTND state
@@ -98,7 +109,7 @@ BTND:
 	in	$t3, $zero, $zero, $zero, 3		# : update $t3 to new BTND state
 	in	$v0, $zero, $zero, $zero, 3		#
 	out	$zero, $zero, $zero, $zero, 4	# : set IORegister[4] = 0 zero timer
-	in	$s1, $zero, $zero, $zero, 4				# : set $s1 = IORegister[4] 
+	in	$s1, $zero, $zero, $zero, 4				# : set $s1 = IORegister[4]
 	branch $zero, $zero, $zero, $zero, pause_1	# : jump back to pause_1
 
 BTND_2:
@@ -113,11 +124,11 @@ led_change:
 	and $t1, $t1, $t1, $zero, 1			    # : set $t1 = ($t1) & ($t1) & (0b...00001) mask all leds except for LD 0
 	out	$t1, $zero, $zero, $zero, 1			# : change LED register
 	branch $zero, $zero, $zero, $zero, pause_1	# : jump back to pause_1
-	
+
 halt:
-	sub $zero, $zero, $zero, $zero, 0		# 
+	sub $zero, $zero, $zero, $zero, 0		#
 	halt $zero, $zero, $zero, $zero, 0		# : halt
-	sub $zero, $zero, $zero, $zero, 0		# 
+	sub $zero, $zero, $zero, $zero, 0		#
 
 pause_2:
 	in	$at, $zero, $zero, $zero, 2		# : (update) set $t2 = IORegister[2]
