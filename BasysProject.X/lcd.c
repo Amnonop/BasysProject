@@ -550,6 +550,7 @@ lcdShowSelectedRegister()
     char registerValueString[] = "";
     int registerNumber = 0X000;
     if(btnState.BTNU) registerNumber++; //BTNU PUSH
+    resetButtonsState();
     if (registerNumber>0X1FF) registerNumber = 0X000;
     sprintf(registerNumberString, "%X", registerNumber);
     strcat(firstLcdLine, registerNumberString);
@@ -606,7 +607,8 @@ void lcdShowSelectedMemory()
     if(btnState.BTNU) memoryAdress++;
     if (memoryAdress>0x1FF) memoryAdress = 0x000;
     executionState.memAdress4lcd = memoryAdress;
-    sprintf(memoryAdressString, "%X", memoryAdress);
+    resetButtonsState();
+    sprintf(memoryAdressString, "%3X", memoryAdress);
     strcat(firstLcdLine, memoryAdressString);
     strcat(firstLcdLine, " = ");
     memoryValue = memory[memoryAdress];

@@ -6,19 +6,14 @@
 #include "io_registers_handler.h"
 
 void __ISR(_TIMER_5_VECTOR, ipl2) _Timer5Handler(void) {
-    if (BTN_GetValue(0)) 
+    if (!BTN_GetValue(0) && !btnState.BTNU) 
     {
-        btnState.BTNU = 1;
+        btnState.BTNU = btnState.prevBTNU ;
     }
 
-    if (BTN_GetValue(1)) 
+    if (!BTN_GetValue(1) && !btnState.BTNL)  
     {
-        btnState.BTNL = 1;
-    }
-
-    if (BTN_GetValue(2)) 
-    {
-        btnState.BTNC = 1;
+        btnState.BTNL = btnState.prevBTNL ;
     }
 
     if (BTN_GetValue(2)) 
@@ -26,10 +21,18 @@ void __ISR(_TIMER_5_VECTOR, ipl2) _Timer5Handler(void) {
         updateButtonCenterRegister();
     }
 
+    if (!BTN_GetValue(3) && !btnState.BTNR) 
+    {
+        btnState.BTNR = btnState.prevBTNR ;    
+    }
+
     if (BTN_GetValue(4)) 
     {
         updateButtonDownRegister();
     }
+    btnState.prevBTNU = BTN_GetValue(0);
+    btnState.prevBTNL = BTN_GetValue(1);
+    btnState.prevBTNR = BTN_GetValue(3);
 
     IFS0bits.T5IF = 0; // clear interrupt flag
 }

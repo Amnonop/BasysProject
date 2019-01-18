@@ -1154,7 +1154,8 @@ void execute()
                 instructionCounter++;
             }
         }
+        resetButtonsState();
     }
     
-    resetButtonsState();
+    
 }

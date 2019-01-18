@@ -41,10 +41,13 @@ typedef struct swtState SwtState;
 
 struct btnState {
 
+    int prevBTNU;
     int BTNU;
     int BTND;
     int BTNC;
+    int prevBTNL;
     int BTNL;
+    int prevBTNR;
     int BTNR;
 };
 typedef struct btnState BtnState;
