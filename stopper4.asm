@@ -79,7 +79,7 @@ reset_clock:
 	in	$t2, $zero, $zero, $zero, 2		# : (update) set $t2 = IORegister[2]
 	branch	$zero, $zero, $zero, $zero, stopper		#
 
-pause_1:																									# enter PAUSE mode
+pause_1:
 	in			$t2, 		$zero, 	$zero, 	$zero, 	2								# update current counter of BTNC
 	branch	$zero,	$zero,	$zero,	0,			pause_mode			# enter PAUSE mode
 	#in	$at, $zero, $zero, $zero, 2		# : (update) set $at = IORegister[2]
