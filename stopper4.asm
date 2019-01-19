@@ -85,7 +85,6 @@ pause_1:
 	branch	$zero,	$zero,	$zero,	0,		pause_mode			# enter PAUSE mode
 
 pause_mode:
-	in		$t1,	$zero,	$zero,	$zero,	0					# $t0 = IORegister[0]
 	in		$a0, 	$zero, 	$zero, 	$zero, 	2					# $a0 = IORegister[2]
 	branch	$zero,	$t2, 	$a0, 	1, 		exit_pause			# if BTNC state changed, exit PAUSE mode
 	in		$a0,	$zero,	$zero,	$zero,	3					# $a0 = IORegister[3]
@@ -99,7 +98,7 @@ pause_mode:
 exit_pause:
 	in		$t2, 	$zero, 	$zero, 	$zero, 	2					# update current counter of BTNC
 	in		$a0,	$zero,	$zero,	$zero,	1					# $a0 = IORegister[1]
-	and		$a0,	$a0,	$zero,	$zero,	0XFF0				# turn off only last bit
+	and		$a0,	$a0,	$zero,	$zero,	0xFF0				# turn off only last bit
 	out		$a0,	$zero,	$zero,	$zero,	1					# IORegister[1] = $a0 (turn LED0 off)
 	branch	$zero,	$zero,	$zero,	0,		stopper				# enter PAUSE mode
 
@@ -119,6 +118,7 @@ BTND_2:
 	branch $zero, $zero, $zero, $zero, reset_clock	# :
 
 led_change:
+	in		$t1,	$zero,	$zero,	$zero,	0					# $t0 = IORegister[0]
 	in		$a0,	$zero,	$zero,	$zero,	1					# $a0 = IORegister[1]
 	and		$a0,	$a0,	$a0,	$zero,	0x001				# turn off last bit, to turn off LED0
 	branch	$zero,	$a0,	$zero,	0,		led_on				# if the led was off, turn it on				
@@ -132,7 +132,7 @@ led_on:
 
 led_off:
 	in		$a0,	$zero,	$zero,	$zero,	1					# $a0 = IORegister[1]
-	and		$a0,	$a0,	$zero,	$zero,	0XFF0				# turn off only last bit
+	and		$a0,	$a0,	$zero,	$zero,	0xFF0				# turn off only last bit
 	out		$a0,	$zero,	$zero,	$zero,	1					# IORegister[1] = $a0
 	branch	$zero,	$zero,	$zero,	0,		pause_mode			# return to PAUSE mode
 
