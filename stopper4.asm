@@ -85,14 +85,14 @@ pause_1:
 	branch	$zero,	$zero,	$zero,	0,		pause_mode			# enter PAUSE mode
 
 pause_mode:
-	in		$a0, 	$zero, 	$zero, 	$zero, 	2					# $a0 = IORegister[2]
-	branch	$zero,	$t2, 	$a0, 	1, 		exit_pause			# if BTNC state changed, exit PAUSE mode
 	in		$a0,	$zero,	$zero,	$zero,	3					# $a0 = IORegister[3]
 	branch	$zero,	$t3,	$a0,	1,		BTND				# if BTND state changed, initialize the display
 	add		$a0,	$zero,	$zero,	$zero,	160					# $a0 = 160 (approximatly 5 seconds)
 	in		$a1,	$zero,	$zero,	$zero,	0					# $a1 = IORegister[0]
 	sub		$a1,	$a1,	$t1,	$zero,	0					# $a1 = $a1 - $t1
 	branch	$zero,	$a1,	$a0,	2,		led_change			# if 5 seconds elapsed, turn off LED0
+	in		$a0, 	$zero, 	$zero, 	$zero, 	2					# $a0 = IORegister[2]
+	branch	$zero,	$t2, 	$a0, 	1, 		exit_pause			# if BTNC state changed, exit PAUSE mode
 	branch	$zero,	$zero,	$zero,	0,		pause_mode			# continue PAUSE mode
 
 exit_pause:
