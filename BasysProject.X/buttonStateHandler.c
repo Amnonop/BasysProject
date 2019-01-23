@@ -5,7 +5,17 @@
 #include "btn.h"
 #include "io_registers_handler.h"
 
-void __ISR(_TIMER_5_VECTOR, ipl2) _Timer5Handler(void) {
+enum ButtonType
+{
+    BUTTON_UP = 0,
+    BUTTON_LEFT = 1,
+    BUTTON_CENTER = 2,
+    BUTTON_RIGHT = 3,
+    BUTTON_DOWN = 4
+};
+
+void __ISR(_TIMER_5_VECTOR, ipl2) _Timer5Handler(void) 
+{
     if (!BTN_GetValue(0) && !btnState.BTNU) 
     {
         btnState.BTNU = btnState.prevBTNU ;
