@@ -5,17 +5,25 @@
 #include "btn.h"
 #include "io_registers_handler.h"
 
-enum ButtonType
-{
-    BUTTON_UP = 0,
-    BUTTON_LEFT = 1,
-    BUTTON_CENTER = 2,
-    BUTTON_RIGHT = 3,
-    BUTTON_DOWN = 4
-};
+unsigned char currentButtonUpState;
 
 void __ISR(_TIMER_5_VECTOR, ipl2) _Timer5Handler(void) 
 {
+    unsigned char buttonValue;
+    if (!btnState.BTNU)
+    {
+        buttonValue = BTN_GetValue(BUTTON_UP);
+        if (currentButtonUpState && !buttonValue) 
+        {
+            btnState.BTNU = 1;
+            currentButtonUpState = buttonValue;
+        } 
+        else 
+        {
+            currentButtonUpState = buttonValue;
+        }
+    }
+    
     if (!BTN_GetValue(0) && !btnState.BTNU) 
     {
         btnState.BTNU = btnState.prevBTNU ;
@@ -61,15 +69,23 @@ void timer5Setup() {
     IFS0bits.T5IF = 0; //    clear interrupt flag
     IEC0bits.T5IE = 1; //    enable interrupt
     T5CONbits.ON = 1; //    turn on Timer5
-    macro_enable_interrupts(); //    enable interrupts at CPU
+    //macro_enable_interrupts(); //    enable interrupts at CPU
 }
 
-void buttonStateHandlerInit() {
+void buttonStateHandlerInit() 
+{
+    btnState.BTNU = 0;
+    btnState.BTNL = 0;
+    btnState.BTNC = 0;
+    btnState.BTNR = 0;
+    btnState.BTND = 0;
+    currentButtonUpState = 0;
+    
     timer5Setup();
 }
 
 void resetButtonsState() {
-    btnState.BTNU = 0;
+    //btnState.BTNU = 0;
     btnState.BTNL = 0;
     btnState.BTNC = 0;
     btnState.BTNR = 0;
