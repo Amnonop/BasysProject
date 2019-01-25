@@ -16,12 +16,8 @@ void __ISR(_TIMER_5_VECTOR, ipl2) _Timer5Handler(void)
         if (currentButtonState.BTNU && !buttonValue) 
         {
             btnState.BTNU = 1;
-            currentButtonState.BTNU = buttonValue;
         } 
-        else 
-        {
-            currentButtonState.BTNU = buttonValue;
-        }
+        currentButtonState.BTNU = buttonValue;
     }
 
     buttonValue = BTN_GetValue(BUTTON_LEFT);
@@ -30,24 +26,28 @@ void __ISR(_TIMER_5_VECTOR, ipl2) _Timer5Handler(void)
         btnState.BTNL = currentButtonState.BTNL ;
     }
     currentButtonState.BTNL = buttonValue;
-
-    if (BTN_GetValue(2)) 
-    {
-        updateButtonCenterRegister();
-    }
-
-    if (!BTN_GetValue(3) && !btnState.BTNR) 
-    {
-        btnState.BTNR = btnState.prevBTNR ;    
-    }
-
-    if (BTN_GetValue(4)) 
-    {
-        updateButtonDownRegister();
-    }
     
-    
-    btnState.prevBTNR = BTN_GetValue(3);
+    buttonValue = BTN_GetValue(BUTTON_RIGHT);
+    if (!buttonValue && !btnState.BTNR) 
+    {
+        btnState.BTNR = currentButtonState.prevBTNR ;    
+    }
+    currentButtonState.prevBTNR = buttonValue;
+
+    if (!executionState.isPause)
+    {
+        buttonValue = BTN_GetValue(BUTTON_CENTER);
+        if (currentButtonState.BTNC && !buttonValue) 
+        {
+            updateButtonCenterRegister();
+        }
+        currentButtonState.BTNC = buttonValue;
+        
+        if (BTN_GetValue(BUTTON_DOWN)) 
+        {
+            updateButtonDownRegister();
+        }
+    }
 
     IFS0bits.T5IF = 0; // clear interrupt flag
 }
