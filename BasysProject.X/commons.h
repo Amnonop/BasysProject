@@ -48,15 +48,12 @@ struct swtState {
 typedef struct swtState SwtState;
 
 
-struct btnState {
-
-    int prevBTNU;
+struct btnState 
+{
     int BTNU;
     int BTND;
     int BTNC;
-    int prevBTNL;
     int BTNL;
-    int prevBTNR;
     int BTNR;
 };
 typedef struct btnState BtnState;

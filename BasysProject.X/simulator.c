@@ -516,7 +516,6 @@ void execute()
     
     if (!executionState.isHaltExecuted) 
     {
-        //executionState.isPause = (executionState.isPause ^ btnState.BTNL); 
         setPauseState();
         if(!executionState.isPause)       
         {

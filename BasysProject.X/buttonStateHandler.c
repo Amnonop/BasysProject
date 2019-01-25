@@ -30,9 +30,9 @@ void __ISR(_TIMER_5_VECTOR, ipl2) _Timer5Handler(void)
     buttonValue = BTN_GetValue(BUTTON_RIGHT);
     if (!buttonValue && !btnState.BTNR) 
     {
-        btnState.BTNR = currentButtonState.prevBTNR ;    
+        btnState.BTNR = currentButtonState.BTNR ;    
     }
-    currentButtonState.prevBTNR = buttonValue;
+    currentButtonState.BTNR = buttonValue;
 
     if (!executionState.isPause)
     {
