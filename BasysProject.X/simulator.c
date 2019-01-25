@@ -9,7 +9,7 @@
 #include "lcd_handler.h"
 
 #define STOPPER_INPUT_MEMORY_SIZE 130
-#define FIB_INPUT_MEMORY_SIZE 256
+#define FIB_INPUT_MEMORY_SIZE 257
 
 char* stopperInputMemory[STOPPER_INPUT_MEMORY_SIZE] = 
 {
