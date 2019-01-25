@@ -12,6 +12,7 @@
 #include "simulator.h"
 #include "io_registers_handler.h"
 #include "buttonStateHandler.h"
+#include "lcd_handler.h"
 #include "commons.h"
 
 
@@ -50,43 +51,19 @@ int main()
     return (1);
 }
 
-/***	SSDDemo
-**
-**	Parameters:
-**		
-**
-**	Return Value:
-**		
-**
-**	Description:
-**		This function initializes the SSD pins and calls specific functions for initializing LCD, BTN and SSD modules.
-**      The 4 digits display a counter values and the BTNC button resets the counter
-**          
-*/
-
 void startSimulator()
 {
-    unsigned int wCnt = 0, baseCnt = 0;
     LCD_Init(); 
     SWT_Init();
     BTN_Init();
     LED_Init();
     buttonStateHandlerInit();
-    
+    initLcdHandler();
     initSimulator();
     SSD_Init();
     
     while(1)
     {
-//        execute();
-//        updateCounterRegister();
-//        if (instructionCounter == 7)
-//        {
-//            updateButtonCenterRegister();
-//        }
-//        if  (instructionCounter == 25)
-//        {
-//            updateButtonCenterRegister();
-//        }
+        
     }   
 }

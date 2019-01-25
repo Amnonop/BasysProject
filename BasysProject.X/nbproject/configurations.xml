@@ -16,6 +16,7 @@
       <itemPath>swt.h</itemPath>
       <itemPath>led.h</itemPath>
       <itemPath>buttonStateHandler.h</itemPath>
+      <itemPath>lcd_handler.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -35,6 +36,7 @@
       <itemPath>swt.c</itemPath>
       <itemPath>led.c</itemPath>
       <itemPath>buttonStateHandler.c</itemPath>
+      <itemPath>lcd_handler.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

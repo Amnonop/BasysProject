@@ -6,6 +6,7 @@
 #include "swt.h"
 #include "io_registers_handler.h"
 #include "buttonStateHandler.h"
+#include "lcd_handler.h"
 
 #define STOPPER_INPUT_MEMORY_SIZE 130
 #define FIB_INPUT_MEMORY_SIZE 256
