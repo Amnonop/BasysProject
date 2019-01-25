@@ -2,7 +2,7 @@
 	out		$zero, 	$zero, 	$zero, 	$zero, 	1					# 1: set IORegister[1] = 0
 	out		$zero, 	$zero, 	$zero, 	$zero, 	4					# 2: set IORegister[4] = 0
 	in		$t2, 	$zero, 	$zero, 	$zero, 	2					# 3: set $t2 = IORegister[2] - BUTNC state
-	add		$s0, 	$zero, 	$zero, 	$zero, 	25					# 4: setting approximate time diff
+	add		$s0, 	$zero, 	$zero, 	$zero, 	20					# 4: setting approximate time diff
 	in		$s2, 	$zero, 	$zero, 	$zero, 	0					# 5: set $s2 = IORegister[0]
 	in		$t3, 	$zero, 	$zero, 	$zero, 	3					# 6: set $t3 = IORegister[3] - BUTND state
 
@@ -100,7 +100,7 @@ pause_1:
 pause_mode:
 	in		$a0,	$zero,	$zero,	$zero,	3					# $a0 = IORegister[3]
 	branch	$zero,	$t3,	$a0,	1,		BTND				# if BTND state changed, initialize the display
-	add		$a0,	$zero,	$zero,	$zero,	160					# $a0 = 160 (approximatly 5 seconds)
+	add		$a0,	$zero,	$zero,	$zero,	155					# $a0 = 160 (approximatly 5 seconds)
 	in		$a1,	$zero,	$zero,	$zero,	0					# $a1 = IORegister[0]
 	sub		$a1,	$a1,	$t1,	$zero,	0					# $a1 = $a1 - $t1
 	branch	$zero,	$a1,	$a0,	2,		led_change			# if 5 seconds elapsed, turn off LED0
