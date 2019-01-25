@@ -1,44 +1,51 @@
-	out		$zero, $zero, $zero, $zero, 1	# : set IORegister[1] = 0
-	out		$zero, $zero, $zero, $zero, 4	# : set IORegister[4] = 0
-	in		$t2, $zero, $zero, $zero, 2		# : set $t2 = IORegister[2] - BUTNC state
-	add		$s0, $zero, $zero, $zero, 25		# :###UPDATE AFTER PAUSE!
-	in		$s2, $zero, $zero, $zero, 0		# : set $s2 = IORegister[0]
-	in		$t3, $zero, $zero, $zero, 3		# : set $t3 = IORegister[3] - BUTND state
+	add		$sp, 	$zero, 	$zero, 	$zero, 	512					# 0: set $sp = 512
+	out		$zero, 	$zero, 	$zero, 	$zero, 	1					# 1: set IORegister[1] = 0
+	out		$zero, 	$zero, 	$zero, 	$zero, 	4					# 2: set IORegister[4] = 0
+	in		$t2, 	$zero, 	$zero, 	$zero, 	2					# 3: set $t2 = IORegister[2] - BUTNC state
+	add		$s0, 	$zero, 	$zero, 	$zero, 	25					# 4: setting approximate time diff
+	in		$s2, 	$zero, 	$zero, 	$zero, 	0					# 5: set $s2 = IORegister[0]
+	in		$t3, 	$zero, 	$zero, 	$zero, 	3					# 6: set $t3 = IORegister[3] - BUTND state
 
 stopper:
-	in	$t1, $zero, $zero, $zero, 0				#	branch	$zero, $t2, $a0, 1, pause_1				# : break loop when $a0 != $t0 means IORegister[2] has changed means BTNC was pushed
-	in	$a0, $zero, $zero, $zero, 2					# : set $a0 = IORegister[2]
-	branch	$zero, $t2, $a0, 1, pause_1				# : break loop when $a0 != $t0 means IORegister[2] has changed means BTNC was pushed
-	in	$v0, $zero, $zero, $zero, 3					# : set $a0 = IORegister[3]
-	branch	$zero, $t3, $v0, 3, BTND_2				# : break loop when $a0 != $t0 means IORegister[3] has changed
-	sub $t1, $t1, $s2, $zero, 0						# : time diff
-	branch	$zero, $t1, $s0, 4, update_timer 		#
-	branch $zero, $zero, $zero, $zero, stopper		#
+	in		$t1, 	$zero, 	$zero, 	$zero, 	0					# 7: $t1 = IORegister[0]
+	in		$a0, 	$zero, 	$zero, 	$zero, 	2					# 8: $a0 = IORegister[2]
+	branch	$zero, 	$t2, 	$a0, 	1, 		pause_1				# 9: break loop when $a0 != $t0 means IORegister[2] has changed means BTNC was pushed
+	in		$v0, 	$zero, 	$zero, 	$zero, 	3					# : set $a0 = IORegister[3]
+	branch	$zero, 	$t3, 	$v0, 	3, 		BTND_2				# : break loop when $a0 != $t0 means IORegister[3] has changed
+	sub 	$t1, 	$t1, 	$s2, 	$zero, 	0					# : time diff
+	branch	$zero, 	$t1, 	$s0, 	4, 		update_timer 		#
+	branch 	$zero, 	$zero, 	$zero, 	$zero, 	stopper				#
 
 update_timer:
-	in	$s2, $zero, $zero, $zero, 0				# :(update) set $s0 = IORegister[0]
-	in	$s1, $zero, $zero, $zero, 4				# : set $s1 = IORegister[4]
-	add $a1, $s1, $zero, $zero, 0				#
-	add $t2, $zero, $zero, $zero, 0x9			#
-	add $a0, $zero, $zero, $zero, 0x50			#
-	and $t1, $a1, $t2, $zero, 0x9				#
-	branch	$zero, $t1, $t2, 1, up_sec			#
-	and $t1, $a1, $a0, $zero, 0x50				#
-	branch	$zero, $t1, $a0, 1, up_ten_sec		#
-	sra $at, $a1, $zero, $zero, 8				#
-	and $t1, $at, $t2, $zero, 0x9				#
-	branch	$zero, $t1, $t2, 1, up_mins			#
-	and $t1, $at, $a0, $zero, 0x50				#
-	branch	$zero, $t1, $a0, 1, up_ten_mins		#
-	branch $zero, $zero, $zero, $zero, stopper	#
+	sub		$sp, 	$sp, 	$zero, 	$zero, 	1					# adjust stack for 1 item
+	sw 		$t2, 	$sp, 	$zero, 	$zero, 	0					# 6: save $t2 (BTNC state)
+	in		$s2, 	$zero, 	$zero, 	$zero, 	0					# :(update) set $s0 = IORegister[0]
+	in		$s1, 	$zero, 	$zero, 	$zero, 	4				# : set $s1 = IORegister[4]
+	add 	$a1, 	$s1, 	$zero, 	$zero, 	0				#
+	add 	$t2, 	$zero, 	$zero, 	$zero, 	0x9			#
+	add 	$a0, 	$zero, 	$zero, 	$zero, 	0x50			#
+	and 	$t1, 	$a1, 	$t2, 	$zero, 	0x9				#
+	branch	$zero, 	$t1, 	$t2, 	1, 		up_sec			#
+	and 	$t1, 	$a1, 	$a0, 	$zero, 	0x50				#
+	branch	$zero, 	$t1, 	$a0, 	1, 		up_ten_sec		#
+	sra 	$at, 	$a1, 	$zero, 	$zero, 	8				#
+	and 	$t1, 	$at, 	$t2, 	$zero, 	0x9				#
+	branch	$zero, 	$t1, 	$t2, 	1, 		up_mins			#
+	and 	$t1, 	$at, 	$a0, 	$zero, 	0x50				#
+	branch	$zero, 	$t1, 	$a0, 	1, 		up_ten_mins		#
+	lw 		$t2, 	$sp, 	$zero, 	$zero, 	0						# 15: restore $t2
+	add 	$sp, 	$sp, 	$zero, 	$zero, 	1						# c: pop 1 item from stack
+	branch 	$zero, 	$zero, 	$zero, 	$zero, 	stopper	#
 
 up_sec:
-	add $t2, $zero, $zero, $zero, 0x0		#
-	and $t2, $t2, $t2, $zero, 0x0			# compare elasped time to other channels
-	add $s1, $s1, $zero, $zero, 0x1			#
-	out $s1, $zero, $zero, $zero, 4				# update SSD
-	in	$t2, $zero, $zero, $zero, 2			# :
-	branch	$zero, $zero, $zero, $zero, stopper	#
+	add 	$t2, 	$zero, 	$zero, 	$zero, 	0x0		#
+	and 	$t2, 	$t2, 	$t2, 	$zero, 	0x0			# compare elasped time to other channels
+	add 	$s1, 	$s1, 	$zero, 	$zero, 	0x1			#
+	out 	$s1, 	$zero, 	$zero, 	$zero, 	4				# update SSD
+	in		$t2, 	$zero, 	$zero, 	$zero, 	2			# :
+	lw 		$t2, 	$sp, 	$zero, 	$zero, 	0						# 15: restore $t2
+	add 	$sp, 	$sp, 	$zero, 	$zero, 	1						# c: pop 1 item from stack
+	branch	$zero, 	$zero, 	$zero, 	$zero, 	stopper	#
 
 up_ten_sec:
 	add $t2, $zero, $zero, $zero, 0x0		#
@@ -46,6 +53,8 @@ up_ten_sec:
 	add $s1, $a1, $zero, $zero, 0x010		#
 	out $s1, $zero, $zero, $zero, 4				#
 	in	$t2, $zero, $zero, $zero, 2			# :
+	lw 		$t2, 	$sp, 	$zero, 	$zero, 	0						# 15: restore $t2
+	add 	$sp, 	$sp, 	$zero, 	$zero, 	1						# c: pop 1 item from stack
 	branch	$zero, $zero, $zero, $zero, stopper #
 
 up_mins:
@@ -54,6 +63,8 @@ up_mins:
 	add $s1, $a1, $zero, $zero, 0x100			#
 	out $s1, $zero, $zero, $zero, 4				#
 	in	$t2, $zero, $zero, $zero, 2			# :
+	lw 		$t2, 	$sp, 	$zero, 	$zero, 	0						# 15: restore $t2
+	add 	$sp, 	$sp, 	$zero, 	$zero, 	1						# c: pop 1 item from stack
 	branch	$zero, $zero, $zero, $zero, stopper #
 
 up_ten_mins:
@@ -67,6 +78,8 @@ up_ten_mins:
 	sll $s1, $a1, $zero, $zero, 12				#
 	out	$s1, $zero, $zero, $zero, 4				# : set IORegister[4] = 0
 	in	$t2, $zero, $zero, $zero, 2			# :
+	lw 		$t2, 	$sp, 	$zero, 	$zero, 	0						# 15: restore $t2
+	add 	$sp, 	$sp, 	$zero, 	$zero, 	1						# c: pop 1 item from stack
 	branch	$zero, $zero, $zero, $zero, stopper #
 
 reset_clock:
@@ -121,7 +134,7 @@ led_change:
 	in		$t1,	$zero,	$zero,	$zero,	0					# $t0 = IORegister[0]
 	in		$a0,	$zero,	$zero,	$zero,	1					# $a0 = IORegister[1]
 	and		$a0,	$a0,	$a0,	$zero,	0x001				# turn off last bit, to turn off LED0
-	branch	$zero,	$a0,	$zero,	0,		led_on				# if the led was off, turn it on				
+	branch	$zero,	$a0,	$zero,	0,		led_on				# if the led was off, turn it on
 	branch	$zero,	$zero,	$zero,	0,		led_off				# else the led was on, turn it off
 
 led_on:
