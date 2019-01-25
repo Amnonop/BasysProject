@@ -55,8 +55,10 @@
 **      The LCD initialization sequence is performed, the LCD is turned on.
 **          
 */
+int registerNumber;
 void LCD_Init()
 {
+    registerNumber = 0;
     LCD_ConfigurePins();
     LCD_InitSequence(displaySetOptionDisplayOn);
 }
@@ -541,21 +543,26 @@ void lcdShowInstructionandPc()
     LCD_WriteStringAtPos(pcString, 1, 0);
 }
 
-lcdShowSelectedRegister()
+void lcdShowSelectedRegister()
 {
     int registerValue = 0;
-    char firstLcdLine[] = "R";
-    char secondLcdLine[] = ""; // will print empty string
-    char registerNumberString[] = "";
-    char registerValueString[] = "";
-    int registerNumber = 0X000;
-    if(btnState.BTNU) registerNumber++; //BTNU PUSH
-    resetButtonsState();
-    if (registerNumber>0X1FF) registerNumber = 0X000;
-    sprintf(registerNumberString, "%X", registerNumber);
+    char firstLcdLine[15] = "R";
+    char registerNumberString[3] = "";
+    char registerValueString[9] = "";
+    
+    if(btnState.BTNU) 
+    {
+        btnState.BTNU = 0;
+        registerNumber++;
+    }
+    
+    if (registerNumber > NUM_OF_REGISTERS) 
+        registerNumber = 0;
+    
+    sprintf(registerNumberString, "%02X", registerNumber);
     strcat(firstLcdLine, registerNumberString);
     registerValue = registers[registerNumber];
-    sprintf(registerValueString, "%X", registerValue);
+    sprintf(registerValueString, "%08X", registerValue);
     strcat(firstLcdLine, " = ");
     strcat(firstLcdLine,registerValueString);
     LCD_WriteStringAtPos(firstLcdLine, 0, 0);
@@ -604,10 +611,15 @@ void lcdShowSelectedMemory()
     else
         memoryAdress = executionState.memAdress4lcd;
     
-    if(btnState.BTNU) memoryAdress++;
+    if(btnState.BTNU)
+    {
+        memoryAdress++;
+        btnState.BTNU = 0;
+    }
+    
     if (memoryAdress>0x1FF) memoryAdress = 0x000;
     executionState.memAdress4lcd = memoryAdress;
-    resetButtonsState();
+    //resetButtonsState();
     sprintf(memoryAdressString, "%3X", memoryAdress);
     strcat(firstLcdLine, memoryAdressString);
     strcat(firstLcdLine, " = ");

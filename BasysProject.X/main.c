@@ -8,9 +8,11 @@
 #include "ssd.h"
 #include "btn.h"
 #include "swt.h"
+#include "led.h"
 #include "simulator.h"
 #include "io_registers_handler.h"
 #include "buttonStateHandler.h"
+#include "commons.h"
 
 
 #pragma config JTAGEN = OFF     
@@ -68,40 +70,23 @@ void startSimulator()
     LCD_Init(); 
     SWT_Init();
     BTN_Init();
+    LED_Init();
     buttonStateHandlerInit();
     
     initSimulator();
     SSD_Init();
     
-//    int i = 0;
-//    while(1)
-//    {
+    while(1)
+    {
 //        execute();
 //        updateCounterRegister();
-//        if (i == 10)
+//        if (instructionCounter == 7)
 //        {
 //            updateButtonCenterRegister();
 //        }
-//        i++;
-//    }
-// OPTION 1: POLLING    
-// ORIGINAL CODE from SSDDemo Project
-// The following loop demonstrates POLLING:
-    
-/*starts here*/
-//    while(1)
-//    {
-//       if(++baseCnt == 1000000)
+//        if  (instructionCounter == 25)
 //        {
-//            //display the counter values on the 4 digits available
-//            SSD_WriteDigitsGrouped(wCnt++, 0);
-//            baseCnt = 0;        
-//            //if button C is pressed, reset the counter
-//            if (BTN_GetValue(2))
-//            {
-//                wCnt=0;
-//            }
+//            updateButtonCenterRegister();
 //        }
-//    }
-/*ends here*/    
+    }   
 }

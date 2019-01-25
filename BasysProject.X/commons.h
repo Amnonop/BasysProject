@@ -8,6 +8,15 @@
 #define HEX_WORD_LENGTH 8
 #define MEMORY_SIZE 512
 
+enum ButtonType
+{
+    BUTTON_UP = 0,
+    BUTTON_LEFT = 1,
+    BUTTON_CENTER = 2,
+    BUTTON_RIGHT = 3,
+    BUTTON_DOWN = 4
+};
+
 /*
 ** Summary:
 **		Represents the execution state of the program.
@@ -39,15 +48,12 @@ struct swtState {
 typedef struct swtState SwtState;
 
 
-struct btnState {
-
-    int prevBTNU;
+struct btnState 
+{
     int BTNU;
     int BTND;
     int BTNC;
-    int prevBTNL;
     int BTNL;
-    int prevBTNR;
     int BTNR;
 };
 typedef struct btnState BtnState;
