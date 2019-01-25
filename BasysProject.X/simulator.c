@@ -500,6 +500,15 @@ void initSimulator()
 	instructionCounter = 0;
 }
 
+void setPauseState()
+{
+    if (btnState.BTNL)
+    {
+        btnState.BTNL = 0;
+        executionState.isPause = !executionState.isPause;
+    }
+}
+
 void execute()
 {
     SWT_refreshAll();
@@ -507,7 +516,8 @@ void execute()
     
     if (!executionState.isHaltExecuted) 
     {
-        executionState.isPause = (executionState.isPause ^ btnState.BTNL);  
+        //executionState.isPause = (executionState.isPause ^ btnState.BTNL); 
+        setPauseState();
         if(!executionState.isPause)       
         {
             decodeInstruction(memory[executionState.pc], &decodedInstruction);
@@ -518,12 +528,12 @@ void execute()
         {
             if(btnState.BTNR)
             {
+                btnState.BTNR = 0;
                 decodeInstruction(memory[executionState.pc], &decodedInstruction);
                 executeInstruction(&decodedInstruction, memory, registers, &executionState);
                 instructionCounter++;
             }
         }
-        resetButtonsState();
     }
     
     
