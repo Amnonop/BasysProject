@@ -109,7 +109,7 @@ BTND:
 	in	$v0, $zero, $zero, $zero, 3		#
 	out	$zero, $zero, $zero, $zero, 4	# : set IORegister[4] = 0 zero timer
 	in	$s1, $zero, $zero, $zero, 4				# : set $s1 = IORegister[4]
-	branch $zero, $zero, $zero, $zero, pause_1	# : jump back to pause_1
+	branch $zero, $zero, $zero, $zero, pause_mode	# : jump back to pause_1
 
 BTND_2:
 	in	$t3, $zero, $zero, $zero, 3		# : set $t3 = IORegister[3] - BUTND state update $t3 to new BTND state
