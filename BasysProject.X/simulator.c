@@ -432,7 +432,6 @@ void loadFibonachi()
 {
 	int instruction;
     int i;
-    char temp;
     
     instruction = 0;
     for (i = 0; i < MEMORY_SIZE; i++) 
@@ -467,17 +466,6 @@ void loadStopper()
             memory[i] = 0;
         }
     }
-}
-
-void display(int instruction, int pc)
-{
-    char instructionString[HEX_WORD_LENGTH + 1];
-    char pcString[4];
-    
-    sprintf(instructionString, "%08X", instruction);
-    LCD_WriteStringAtPos(instructionString, 0, 0);
-    sprintf(pcString, "%03X", pc);
-    LCD_WriteStringAtPos(pcString, 1, 0);
 }
 
 void loadProgram()
@@ -547,6 +535,4 @@ void execute()
             }
         }
     }
-    
-    
 }

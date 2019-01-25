@@ -9,8 +9,6 @@
       <itemPath>utils.h</itemPath>
       <itemPath>lcd.h</itemPath>
       <itemPath>btn.h</itemPath>
-      <itemPath>command_line_arguments.h</itemPath>
-      <itemPath>files_handler.h</itemPath>
       <itemPath>instruction_executer.h</itemPath>
       <itemPath>simulator.h</itemPath>
       <itemPath>commons.h</itemPath>
@@ -31,8 +29,6 @@
       <itemPath>ssd.c</itemPath>
       <itemPath>utils.c</itemPath>
       <itemPath>lcd.c</itemPath>
-      <itemPath>command_line_arguments.c</itemPath>
-      <itemPath>files_handler.c</itemPath>
       <itemPath>instruction_executer.c</itemPath>
       <itemPath>simulator.c</itemPath>
       <itemPath>io_registers_handler.c</itemPath>
@@ -60,7 +56,7 @@
         <platformTool>PK3OBPlatformTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.15</languageToolchainVersion>
-        <platform>3</platform>
+        <platform>4</platform>
       </toolsSet>
       <packs>
         <pack name="PIC32MX_DFP" vendor="Microchip" version="1.0.25"/>
