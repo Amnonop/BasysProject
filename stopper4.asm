@@ -8,87 +8,87 @@
 
 stopper:
 	in		$t1, 	$zero, 	$zero, 	$zero, 	0					# 7: $t1 = IORegister[0]
+	sub 	$t1, 	$t1, 	$s2, 	$zero, 	0					# : time diff
+	branch	$zero, 	$t1, 	$s0, 	4, 		update_timer 		#
 	in		$a0, 	$zero, 	$zero, 	$zero, 	2					# 8: $a0 = IORegister[2]
 	branch	$zero, 	$t2, 	$a0, 	1, 		pause_1				# 9: break loop when $a0 != $t0 means IORegister[2] has changed means BTNC was pushed
 	in		$v0, 	$zero, 	$zero, 	$zero, 	3					# : set $a0 = IORegister[3]
 	branch	$zero, 	$t3, 	$v0, 	3, 		BTND_2				# : break loop when $a0 != $t0 means IORegister[3] has changed
-	sub 	$t1, 	$t1, 	$s2, 	$zero, 	0					# : time diff
-	branch	$zero, 	$t1, 	$s0, 	4, 		update_timer 		#
 	branch 	$zero, 	$zero, 	$zero, 	$zero, 	stopper				#
 
 update_timer:
 	sub		$sp, 	$sp, 	$zero, 	$zero, 	1					# adjust stack for 1 item
 	sw 		$t2, 	$sp, 	$zero, 	$zero, 	0					# 6: save $t2 (BTNC state)
 	in		$s2, 	$zero, 	$zero, 	$zero, 	0					# :(update) set $s0 = IORegister[0]
-	in		$s1, 	$zero, 	$zero, 	$zero, 	4				# : set $s1 = IORegister[4]
-	add 	$a1, 	$s1, 	$zero, 	$zero, 	0				#
-	add 	$t2, 	$zero, 	$zero, 	$zero, 	0x9			#
-	add 	$a0, 	$zero, 	$zero, 	$zero, 	0x50			#
-	and 	$t1, 	$a1, 	$t2, 	$zero, 	0x9				#
-	branch	$zero, 	$t1, 	$t2, 	1, 		up_sec			#
+	in		$s1, 	$zero, 	$zero, 	$zero, 	4					# : set $s1 = IORegister[4]
+	add 	$a1, 	$s1, 	$zero, 	$zero, 	0					#
+	add 	$t2, 	$zero, 	$zero, 	$zero, 	0x9					#
+	add 	$a0, 	$zero, 	$zero, 	$zero, 	0x50				#
+	and 	$t1, 	$a1, 	$t2, 	$zero, 	0x9					#
+	branch	$zero, 	$t1, 	$t2, 	1, 		up_sec				#
 	and 	$t1, 	$a1, 	$a0, 	$zero, 	0x50				#
-	branch	$zero, 	$t1, 	$a0, 	1, 		up_ten_sec		#
-	sra 	$at, 	$a1, 	$zero, 	$zero, 	8				#
-	and 	$t1, 	$at, 	$t2, 	$zero, 	0x9				#
-	branch	$zero, 	$t1, 	$t2, 	1, 		up_mins			#
+	branch	$zero, 	$t1, 	$a0, 	1, 		up_ten_sec			#
+	sra 	$at, 	$a1, 	$zero, 	$zero, 	8					#
+	and 	$t1, 	$at, 	$t2, 	$zero, 	0x9					#
+	branch	$zero, 	$t1, 	$t2, 	1, 		up_mins				#
 	and 	$t1, 	$at, 	$a0, 	$zero, 	0x50				#
-	branch	$zero, 	$t1, 	$a0, 	1, 		up_ten_mins		#
-	lw 		$t2, 	$sp, 	$zero, 	$zero, 	0						# 15: restore $t2
-	add 	$sp, 	$sp, 	$zero, 	$zero, 	1						# c: pop 1 item from stack
-	branch 	$zero, 	$zero, 	$zero, 	$zero, 	stopper	#
+	branch	$zero, 	$t1, 	$a0, 	1, 		up_ten_mins			#
+	lw 		$t2, 	$sp, 	$zero, 	$zero, 	0					# 15: restore $t2
+	add 	$sp, 	$sp, 	$zero, 	$zero, 	1					# c: pop 1 item from stack
+	branch 	$zero, 	$zero, 	$zero, 	$zero, 	stopper				#
 
 up_sec:
-	add 	$t2, 	$zero, 	$zero, 	$zero, 	0x0		#
-	and 	$t2, 	$t2, 	$t2, 	$zero, 	0x0			# compare elasped time to other channels
-	add 	$s1, 	$s1, 	$zero, 	$zero, 	0x1			#
-	out 	$s1, 	$zero, 	$zero, 	$zero, 	4				# update SSD
-	in		$t2, 	$zero, 	$zero, 	$zero, 	2			# :
-	lw 		$t2, 	$sp, 	$zero, 	$zero, 	0						# 15: restore $t2
-	add 	$sp, 	$sp, 	$zero, 	$zero, 	1						# c: pop 1 item from stack
-	branch	$zero, 	$zero, 	$zero, 	$zero, 	stopper	#
+	add 	$t2, 	$zero, 	$zero, 	$zero, 	0x0					#
+	and 	$t2, 	$t2, 	$t2, 	$zero, 	0x0					# compare elasped time to other channels
+	add 	$s1, 	$s1, 	$zero, 	$zero, 	0x1					#
+	out 	$s1, 	$zero, 	$zero, 	$zero, 	4					# update SSD
+	in		$t2, 	$zero, 	$zero, 	$zero, 	2					# :
+	lw 		$t2, 	$sp, 	$zero, 	$zero, 	0					# 15: restore $t2
+	add 	$sp, 	$sp, 	$zero, 	$zero, 	1					# c: pop 1 item from stack
+	branch	$zero, 	$zero, 	$zero, 	$zero, 	stopper				#
 
 up_ten_sec:
-	add $t2, $zero, $zero, $zero, 0x0		#
-	and $a1, $s1, $s1, $zero, 0xFF0			#
-	add $s1, $a1, $zero, $zero, 0x010		#
-	out $s1, $zero, $zero, $zero, 4				#
-	in	$t2, $zero, $zero, $zero, 2			# :
+	add 	$t2, 	$zero, 	$zero, 	$zero, 	0x0		#
+	and 	$a1, 	$s1, 	$s1, 	$zero, 	0xFF0			#
+	add 	$s1, 	$a1, 	$zero, 	$zero, 	0x010		#
+	out 	$s1, 	$zero, 	$zero, 	$zero, 	4				#
+	in		$t2, 	$zero, 	$zero, 	$zero, 	2			# :
 	lw 		$t2, 	$sp, 	$zero, 	$zero, 	0						# 15: restore $t2
 	add 	$sp, 	$sp, 	$zero, 	$zero, 	1						# c: pop 1 item from stack
 	branch	$zero, $zero, $zero, $zero, stopper #
 
 up_mins:
-	add $t2, $zero, $zero, $zero, 0x0			#
-	and $a1, $s1, $s1, $zero, 0xF00				#
-	add $s1, $a1, $zero, $zero, 0x100			#
-	out $s1, $zero, $zero, $zero, 4				#
-	in	$t2, $zero, $zero, $zero, 2			# :
+	add 	$t2, 	$zero, 	$zero, 	$zero, 	0x0			#
+	and 	$a1, 	$s1, 	$s1, 	$zero, 	0xF00				#
+	add 	$s1, 	$a1, 	$zero, 	$zero, 	0x100			#
+	out 	$s1, 	$zero, 	$zero, 	$zero, 	4				#
+	in		$t2, 	$zero, 	$zero, 	$zero, 	2			# :
 	lw 		$t2, 	$sp, 	$zero, 	$zero, 	0						# 15: restore $t2
 	add 	$sp, 	$sp, 	$zero, 	$zero, 	1						# c: pop 1 item from stack
-	branch	$zero, $zero, $zero, $zero, stopper #
+	branch	$zero, 	$zero, 	$zero, 	$zero, 	stopper #
 
 up_ten_mins:
-	in $s1, $zero, $zero, $zero, 4				#
-	add	$a1, $s1, $zero, $zero, 0				#
-	add $t2, $zero, $zero, $zero, 5				#
-	sra	$a1, $a1, $zero, $zero, 12				#
-	and $at, $a1, $t2, $zero, 5					#
-	branch $zero, $at, $t2, 0, reset_clock		#
-	add $a1, $a1, $zero, $zero, 1				#
-	sll $s1, $a1, $zero, $zero, 12				#
-	out	$s1, $zero, $zero, $zero, 4				# : set IORegister[4] = 0
-	in	$t2, $zero, $zero, $zero, 2			# :
+	in 		$s1, 	$zero, 	$zero, 	$zero, 	4				#
+	add		$a1, 	$s1, 	$zero, 	$zero, 	0				#
+	add 	$t2, 	$zero, 	$zero, 	$zero, 	5				#
+	sra		$a1, 	$a1, 	$zero, 	$zero, 	12				#
+	and 	$at, 	$a1, 	$t2, 	$zero, 	5					#
+	branch 	$zero, 	$at, 	$t2, 	0, 		reset_clock		#
+	add 	$a1, 	$a1, 	$zero, 	$zero, 	1				#
+	sll 	$s1, 	$a1, 	$zero, 	$zero, 	12				#
+	out		$s1, 	$zero, 	$zero, 	$zero, 	4				# : set IORegister[4] = 0
+	in		$t2, 	$zero, 	$zero, 	$zero, 	2			# :
 	lw 		$t2, 	$sp, 	$zero, 	$zero, 	0						# 15: restore $t2
 	add 	$sp, 	$sp, 	$zero, 	$zero, 	1						# c: pop 1 item from stack
-	branch	$zero, $zero, $zero, $zero, stopper #
+	branch	$zero, 	$zero, 	$zero, 	$zero, 	stopper #
 
 reset_clock:
-	out $zero, $zero, $zero, $zero, 4				#
-	in	$s1, $zero, $zero, $zero, 4					#
-	in	$a0, $zero, $zero, $zero, 2		# : set $a0 = IORegister[2]
-	in	$at, $zero, $zero, $zero, 2		# : (update) set $t2 = IORegister[2]
-	in	$t2, $zero, $zero, $zero, 2		# : (update) set $t2 = IORegister[2]
-	branch	$zero, $zero, $zero, $zero, stopper		#
+	out 	$zero, 	$zero, 	$zero, 	$zero, 	4				#
+	in		$s1, 	$zero, 	$zero, 	$zero, 	4					#
+	in		$a0, 	$zero, 	$zero, 	$zero, 	2		# : set $a0 = IORegister[2]
+	in		$at, 	$zero, 	$zero, 	$zero, 	2		# : (update) set $t2 = IORegister[2]
+	in		$t2, 	$zero, 	$zero, 	$zero, 	2		# : (update) set $t2 = IORegister[2]
+	branch	$zero, 	$zero, 	$zero, 	$zero, 	stopper		#
 
 pause_1:
 	in		$t2, 	$zero, 	$zero, 	$zero, 	2					# update current counter of BTNC
@@ -116,19 +116,19 @@ exit_pause:
 	branch	$zero,	$zero,	$zero,	0,		stopper				# enter PAUSE mode
 
 BTND:
-	in	$t3, $zero, $zero, $zero, 3		# : update $t3 to new BTND state
-	in	$v0, $zero, $zero, $zero, 3		#
-	in	$t3, $zero, $zero, $zero, 3		# : update $t3 to new BTND state
-	in	$v0, $zero, $zero, $zero, 3		#
-	out	$zero, $zero, $zero, $zero, 4	# : set IORegister[4] = 0 zero timer
-	in	$s1, $zero, $zero, $zero, 4				# : set $s1 = IORegister[4]
-	branch $zero, $zero, $zero, $zero, pause_mode	# : jump back to pause_1
+	in		$t3, 	$zero, 	$zero, 	$zero, 	3		# : update $t3 to new BTND state
+	in		$v0, 	$zero, 	$zero, 	$zero, 	3		#
+	in		$t3, 	$zero, 	$zero, 	$zero, 	3		# : update $t3 to new BTND state
+	in		$v0, 	$zero, 	$zero, 	$zero, 	3		#
+	out		$zero, 	$zero, 	$zero, 	$zero, 	4	# : set IORegister[4] = 0 zero timer
+	in		$s1, 	$zero, 	$zero, 	$zero, 	4				# : set $s1 = IORegister[4]
+	branch 	$zero, 	$zero, 	$zero, 	$zero, 	pause_mode	# : jump back to pause_1
 
 BTND_2:
-	in	$t3, $zero, $zero, $zero, 3		# : set $t3 = IORegister[3] - BUTND state update $t3 to new BTND state
-	in	$t3, $zero, $zero, $zero, 3		# : set $t3 = IORegister[3] - BUTND state update $t3 to new BTND state
-	add	$v0, $t3, $zero, $zero, 0		#
-	branch $zero, $zero, $zero, $zero, reset_clock	# :
+	in		$t3, 	$zero, 	$zero, 	$zero, 	3		# : set $t3 = IORegister[3] - BUTND state update $t3 to new BTND state
+	in		$t3, 	$zero, 	$zero, 	$zero, 	3		# : set $t3 = IORegister[3] - BUTND state update $t3 to new BTND state
+	add		$v0, 	$t3, 	$zero, 	$zero, 	0		#
+	branch 	$zero, 	$zero, 	$zero, 	$zero, 	reset_clock	# :
 
 led_change:
 	in		$t1,	$zero,	$zero,	$zero,	0					# $t0 = IORegister[0]
