@@ -55,8 +55,10 @@
 **      The LCD initialization sequence is performed, the LCD is turned on.
 **          
 */
+int registerNumber;
 void LCD_Init()
 {
+    registerNumber = 0;
     LCD_ConfigurePins();
     LCD_InitSequence(displaySetOptionDisplayOn);
 }
@@ -541,20 +543,28 @@ void lcdShowInstructionandPc()
     LCD_WriteStringAtPos(pcString, 1, 0);
 }
 
-int registerNumber = 0;
-lcdShowSelectedRegister()
+void lcdShowSelectedRegister()
 {
-    char firstLcdLine[] = "R";
+    int registerValue = 0;
+    char firstLcdLine[15] = "R";
+    char registerNumberString[3] = "";
+    char registerValueString[9] = "";
+    
     if(btnState.BTNU) 
     {
-        registerNumber++;
         btnState.BTNU = 0;
+        registerNumber++;
     }
     
-    if (registerNumber == NUM_OF_REGISTERS) 
+    if (registerNumber > NUM_OF_REGISTERS) 
         registerNumber = 0;
     
-    sprintf(firstLcdLine, "R%02X = %08X", registerNumber, registers[registerNumber]);
+    sprintf(registerNumberString, "%02X", registerNumber);
+    strcat(firstLcdLine, registerNumberString);
+    registerValue = registers[registerNumber];
+    sprintf(registerValueString, "%08X", registerValue);
+    strcat(firstLcdLine, " = ");
+    strcat(firstLcdLine,registerValueString);
     LCD_WriteStringAtPos(firstLcdLine, 0, 0);
     LCD_WriteStringAtPos("", 1, 0);
 }

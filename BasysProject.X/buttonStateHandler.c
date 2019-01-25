@@ -23,11 +23,6 @@ void __ISR(_TIMER_5_VECTOR, ipl2) _Timer5Handler(void)
             currentButtonUpState = buttonValue;
         }
     }
-    
-    if (!BTN_GetValue(0) && !btnState.BTNU) 
-    {
-        btnState.BTNU = btnState.prevBTNU ;
-    }
 
     if (!BTN_GetValue(1) && !btnState.BTNL)  
     {
